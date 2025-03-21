@@ -25,5 +25,5 @@ services:
 
 # Соединяем все контейнеры, где указана сеть, в одну сеть.
 networks:
-  horror:
+  horror_core:
     driver: bridge
