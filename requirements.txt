@@ -4,6 +4,7 @@ async-property==0.2.2
 attrs==25.3.0
 click==8.1.8
 Django==5.1.7
+django-cors-headers==4.7.0
 djangorestframework==3.15.2
 drf-spectacular==0.28.0
 h11==0.14.0
