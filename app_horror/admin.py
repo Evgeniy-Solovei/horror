@@ -25,3 +25,16 @@ class BookingAdmin(admin.ModelAdmin):
     """Регистрация в админ панели модели TimeSlot."""
     list_display = [field.name for field in Booking._meta.fields]
 
+
+
+@admin.register(BackgroundPhotoCard)
+class BackgroundPhotoCardAdmin(admin.ModelAdmin):
+    """Регистрация в админ панели модели TimeSlot."""
+    list_display = [field.name for field in BackgroundPhotoCard._meta.fields]
+
+
+
+@admin.register(BlurPhoto)
+class BlurPhotoAdmin(admin.ModelAdmin):
+    """Регистрация в админ панели модели TimeSlot."""
+    list_display = [field.name for field in BlurPhoto._meta.fields]

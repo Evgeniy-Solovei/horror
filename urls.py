@@ -22,12 +22,6 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.conf import settings
 from django.conf.urls.static import static
-from app_core.authentication import telegram_authenticated_unity
-
-
-@telegram_authenticated_unity
-async def template_view(request):
-    return render(request, 'index.html')
 
 
 def internal_only(view):
@@ -46,7 +40,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/schema/redoc/', internal_only(SpectacularRedocView.as_view(url_name='schema'))),
     path('api/', include('app_core.urls')),
-    path('unity/', template_view, name='unity'),
 ]
 
 if settings.DEBUG:

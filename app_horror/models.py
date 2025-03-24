@@ -37,6 +37,24 @@ class Photo(models.Model):
         return f"Фото {self.horror.name}"
 
 
+class BackgroundPhotoCard(models.Model):
+    """Фотографии для каждого Horror"""
+    horror = models.ForeignKey(Horror, on_delete=models.CASCADE, related_name="photos_back_card")
+    image = models.ImageField(upload_to="horrors/background_photo_card/")
+
+    def __str__(self):
+        return f"Фото фона{self.horror.name}"
+
+
+class BlurPhoto(models.Model):
+    """Фотографии для каждого Horror"""
+    horror = models.ForeignKey(Horror, on_delete=models.CASCADE, related_name="photos_blur")
+    image = models.ImageField(upload_to="horrors/blur/")
+
+    def __str__(self):
+        return f"Фото блюра{self.horror.name}"
+
+
 class TimeSlot(models.Model):
     "Модель временных слотов для бронирования квестов"
     time = models.TimeField(unique=True)

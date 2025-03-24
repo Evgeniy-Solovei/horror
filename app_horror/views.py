@@ -11,7 +11,8 @@ class HorrorListView(APIView):
     """Вывод списка всех квестов"""
     async def get(self, request):
         horrors = []
-        async for horror in Horror.objects.prefetch_related('photos').filter(is_active=True).aiterator():  # Итерируем асинхронно
+        async for horror in Horror.objects.prefetch_related('photos', 'photos_back_card', 'photos_blur').filter(
+                is_active=True).aiterator():  # Итерируем асинхронно
             horrors.append(horror)
         data = HorrorSerializer(horrors, many=True).data  # Сериализуем все
         return Response(data)
