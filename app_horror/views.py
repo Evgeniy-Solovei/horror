@@ -73,7 +73,7 @@ class AvailableSlotsView(APIView):
     def format_date(self, date):
         """Форматируем дату в формат '25 Ноября Пн'"""
         # Устанавливаем локаль на русскую
-        locale.setlocale(locale.LC_TIME, "ru_RU.UTF-8")
+        locale.setlocale(locale.LC_TIME, "ru_RU.utf8")
         # Список названий дней недели
         weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
         # Форматируем дату
