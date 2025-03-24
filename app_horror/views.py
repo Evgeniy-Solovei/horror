@@ -1,3 +1,4 @@
+import locale
 from datetime import datetime, timedelta
 from adrf.views import APIView
 from rest_framework import status
@@ -70,12 +71,13 @@ class AvailableSlotsView(APIView):
         return base_price
 
     def format_date(self, date):
-        """Форматируем дату в формат '25 ноября Пн'"""
+        """Форматируем дату в формат '25 Ноября Пн'"""
+        # Устанавливаем локаль на русскую
+        locale.setlocale(locale.LC_TIME, "ru_RU.UTF-8")
         # Список названий дней недели
         weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
         # Форматируем дату
-        return f"{date.day} {date.strftime('%B')} {weekdays[date.weekday()]}"
-
+        return f"{date.day} {date.strftime('%B').capitalize()} {weekdays[date.weekday()]}"
 
 
 class BookingCreateView(APIView):
