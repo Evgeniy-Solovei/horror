@@ -8,6 +8,7 @@ services:
     container_name: horror_cont
     # Сообщаем что для сервиса надо запустить Dockerfile и указываем путь к нему.
     build:
+      context: .
       dockerfile: Dockerfile
     # Устанавливаем команду для применения миграций и для запуска сервера.
     command: >

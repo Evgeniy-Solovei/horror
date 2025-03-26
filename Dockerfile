@@ -23,6 +23,6 @@ ENV LC_ALL=ru_RU.UTF-8
 # Устанавливаем зависимости из файла requirements.txt без кэша
 RUN pip install -r requirements.txt
 # Копируем файлы и папки из папки CRM_system в рабочий каталог WORKDIR
-COPY horror_core .
+COPY . .
 # Запускаем Uvicorn сервер
 CMD ["uvicorn", "horror_core.asgi:application", "--host", "0.0.0.0"]
