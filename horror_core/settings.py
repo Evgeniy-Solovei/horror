@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2gg-22ztvuc16dh35(zs)dx+_ws#ig3#d4^1%vmmokhn67=%og'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # IP адреса или доменные имена, которые имеют доступ к приложению
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '5.101.51.223', '80.249.147.247']
