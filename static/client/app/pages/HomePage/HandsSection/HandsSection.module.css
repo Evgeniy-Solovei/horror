@@ -1,0 +1,13 @@
+.hands {
+  position: relative;
+}
+
+.hands::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background-color: var(--primary-red);
+}

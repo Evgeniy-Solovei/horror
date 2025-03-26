@@ -1,0 +1,119 @@
+.table {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 22px;
+
+  .table__number_color {
+    color: #666666;
+  }
+
+  .table__info {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 6px;
+  }
+}
+
+.table__row {
+  display: flex;
+  gap: 31px;
+}
+
+.table__time {
+  padding: 8px 14px;
+  font-weight: 400;
+  font-size: 31.08px;
+  line-height: 31.08px;
+  text-align: center;
+  background-color: #11b3d1;
+  border-radius: 4.44px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.table__number {
+  max-width: 277px;
+  width: 100%;
+  font-weight: 400;
+  font-size: 31.08px;
+  line-height: 49.72px;
+  text-align: center;
+  border-top: 2.22px solid #ffffff;
+  flex-shrink: 0;
+}
+
+.table__time__disable {
+  color: #5a5a5a;
+  background-color: #393939 !important;
+}
+
+.reservation__more__block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 176px;
+  height: 100%;
+  background-image: url("../../assets/reservation__bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+}
+
+.reservation__button {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  color: #fff;
+  background-color: var(--primary-red);
+  border: none;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+  .table {
+    gap: 30px;
+  }
+
+  .table__row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .table__number {
+    padding-top: 10px;
+    max-width: 100%;
+    text-align: left;
+    font-size: 12px;
+    line-height: 130%;
+  }
+
+  .table__info {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+
+  .table__time {
+    padding: 4px;
+    font-size: 12px;
+    line-height: 130%;
+  }
+
+  .reservation__more__block {
+    background-image: url("../../assets/reservation__bg_phone.png");
+    background-size: contain;
+    background-position: bottom 8px center;
+    min-height: 90px;
+  }
+
+  .reservation__button {
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 150%;
+    gap: 4px;
+    border-radius: 4px;
+  }
+}

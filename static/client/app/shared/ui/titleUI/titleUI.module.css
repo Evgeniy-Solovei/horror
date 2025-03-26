@@ -1,0 +1,48 @@
+.title__block {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  gap: 56px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 82.23px;
+}
+
+.shrink {
+  flex-shrink: 0;
+}
+
+.hr {
+  width: 100%;
+  background-color: #fff;
+}
+
+.link {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .title__block {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 128%;
+  }
+
+  .link {
+    padding: 6px 9px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    border-radius: 4px;
+  }
+}

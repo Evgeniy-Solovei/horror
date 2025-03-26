@@ -1,0 +1,43 @@
+.swiper__block {
+  width: 100%;
+  overflow: hidden;
+}
+
+.title {
+  margin-bottom: 38px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+}
+
+.swiper {
+  width: 100%;
+  position: relative;
+}
+
+.image {
+  width: auto;
+  min-height: 321px;
+  height: 100%;
+  border-radius: 21.64px;
+}
+
+.swiperButtonPrev {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+@media (max-width: 576px) {
+  .image {
+    margin: 0 auto;
+    max-width: calc(100% - 6em);
+  }
+
+  .title {
+    margin-bottom: 30px;
+    padding-bottom: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ffffff;
+  }
+}
