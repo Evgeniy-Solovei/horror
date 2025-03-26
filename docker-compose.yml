@@ -11,10 +11,10 @@ services:
       dockerfile: Dockerfile
     # Устанавливаем команду для применения миграций и для запуска сервера.
     command: >
-       sh -c "python manage.py migrate && uvicorn horror_core.asgi:application --host 0.0.0.0 --port 7000"
+       sh -c "python manage.py migrate && uvicorn horror_core.asgi:application --host 0.0.0.0 --port 8000"
     # Параметр сопоставляющий порты между хостом(8000) и контейнером(8000).
     ports:
-      - '7000:7000'
+      - '8000:8000'
     environment:
       TZ: Europe/Moscow
     # Указываем что всё(все локальные изменения) в текущей директории должно быть доступно в контейнере.
