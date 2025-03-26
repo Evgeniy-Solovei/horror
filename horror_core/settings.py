@@ -23,14 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2gg-22ztvuc16dh35(zs)dx+_ws#ig3#d4^1%vmmokhn67=%og'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # IP адреса или доменные имена, которые имеют доступ к приложению
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '5.101.51.223']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '5.101.51.223', '80.249.147.247']
 # Переменная для управления CORS, содержит список доменов с которых разрешены запросы
-CORS_ALLOWED_ORIGINS = ['http://5.101.51.223', 'https://5.101.51.223']
+CORS_ALLOWED_ORIGINS = ['http://5.101.51.223', 'https://5.101.51.223', 'https://80.249.147.247', 'http://80.249.147.247']
 # Переменная определяет список доменов, которым Django доверяет при обработке CSRF-токенов.
-CSRF_TRUSTED_ORIGINS = ['http://5.101.51.223', 'https://5.101.51.223']
+CSRF_TRUSTED_ORIGINS = ['http://5.101.51.223', 'https://5.101.51.223', 'https://80.249.147.247', 'http://80.249.147.247']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
