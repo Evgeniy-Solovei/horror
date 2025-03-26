@@ -21,7 +21,7 @@ class HorrorListView(APIView):
 class HorrorDetailView(APIView):
     """Вывод детальной информации о квесте"""
     async def get(self, request, horror_id):
-        horror = await Horror.objects.prefetch_related('photos').filter(id=horror_id).afirst()  # Загружаем квест с фотографиями
+        horror = await Horror.objects.prefetch_related('photos', 'photos_back_card', 'photos_blur').filter(id=horror_id).afirst()  # Загружаем квест с фотографиями
         if not horror:
             return Response({"error": "Horror not found"}, status=404)
 
