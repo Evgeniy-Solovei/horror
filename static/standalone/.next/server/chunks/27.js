@@ -1,0 +1,1 @@
+exports.id=27,exports.ids=[27],exports.modules={50254:s=>{s.exports={hands:"HandsSection_hands__rCxIn"}},91027:(s,e,d)=>{"use strict";d.r(e),d.d(e,{default:()=>o});var t=d(37413),a=d(53384),n=d(81195),r=d(50254),l=d.n(r);let o=()=>(0,t.jsx)("section",{className:l().hands,children:(0,t.jsx)(a.default,{src:n.default,alt:"hands"})})}};
