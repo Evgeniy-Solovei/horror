@@ -7,7 +7,7 @@ export interface IReservationProps {
     date: string;
     slots: {
       time: string;
-      price: number;
+      price: string;
       is_booked: boolean;
     }[];
   }[];

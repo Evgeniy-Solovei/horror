@@ -14,11 +14,15 @@ import { Checkbox } from "@headlessui/react";
 import checkbox from "@/app/assets/checkbox.svg";
 import checkboxActive from "@/app/assets/checkbox__active.svg";
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/app/api/queryClient";
+import { fetchBookings } from "@/app/api/fetchBookings/fetchBookings";
+import { useForm } from "react-hook-form";
 
 interface IReservationProps {
   refDialog: RefObject<HTMLDialogElement | null>;
   onClose: () => void;
-  rezerv?: IModalProps;
+  rezerv: IModalProps;
 }
 
 export const ReservationModal = ({
@@ -29,6 +33,37 @@ export const ReservationModal = ({
   const [enabled, setEnabled] = useState(false);
   const [player, setPlayer] = useState(false);
   const [policy, setPolicy] = useState(false);
+
+  const mutateReservation = useMutation(
+    {
+      mutationFn: (data: {
+        horror: number;
+        data: string;
+        slot: number;
+        first_name: string;
+        last_name: string;
+        phone: string;
+        certificate: boolean;
+        comment: string;
+        price: string;
+      }) =>
+        fetchBookings(
+          Number(rezerv.id),
+          rezerv.date,
+          data.slot,
+          data.first_name,
+          data.last_name,
+          data.phone,
+          data.certificate,
+          data.comment,
+          rezerv.price
+        ),
+      mutationKey: ["horrors"],
+    },
+    queryClient
+  );
+
+  const { register, handleSubmit } = useForm();
 
   if (!rezerv || !rezerv.date || !rezerv.time || !rezerv.price) {
     return null;
@@ -65,13 +100,46 @@ export const ReservationModal = ({
           <span>*Цена для команды 1-4 человек</span>
         </div>
         <div className={style.modal__form}>
-          <form className={style.form}>
+          <form
+            onSubmit={handleSubmit(
+              ({
+                horror,
+                data,
+                slot,
+                first_name,
+                last_name,
+                phone,
+                certificate,
+                comment,
+                price,
+              }) => {
+                mutateReservation.mutate({
+                  horror,
+                  data,
+                  slot,
+                  first_name,
+                  last_name,
+                  phone,
+                  certificate,
+                  comment,
+                  price,
+                });
+              }
+            )}
+            className={style.form}
+          >
             <div className={style.form__upper}>
               <FormField title="Имя">
-                <input className={style.input} placeholder="Иван" type="text" />
+                <input
+                  {...register("first_name")}
+                  className={style.input}
+                  placeholder="Иван"
+                  type="text"
+                />
               </FormField>
               <FormField title="Фамилия">
                 <input
+                  {...register("last_name")}
                   className={style.input}
                   placeholder="Иванов"
                   type="text"
@@ -80,6 +148,7 @@ export const ReservationModal = ({
             </div>
             <FormField title="Ваш телефон">
               <input
+                {...register("phone")}
                 placeholder="+(375) 333-33-33-33"
                 className={style.input}
                 type="tel"
@@ -87,6 +156,7 @@ export const ReservationModal = ({
             </FormField>
             <label className={style.label} htmlFor="sertificate">
               <Checkbox
+                {...register("certificate")}
                 className={style.check}
                 id="sertificate"
                 checked={enabled}
@@ -107,6 +177,7 @@ export const ReservationModal = ({
             </label>
             <FormField title="Комментарий">
               <textarea
+                {...register("comment")}
                 className={classNames(style.input, style.textarea)}
                 placeholder="Введите ваш комментарий"
               ></textarea>

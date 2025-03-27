@@ -20,11 +20,11 @@ export interface IHeroProps {
 const HeroSection = ({ data, quests }: IHeroProps) => {
   return (
     <section
-      // style={{
-      //   backgroundImage: `url(${$api}${
-      //     data?.photos_blur.find((item) => item.image)?.image
-      //   })`,
-      // }}
+      style={{
+        backgroundImage: `url(${$api}${
+          data?.photos_blur.find((item) => item.image)?.image
+        })`,
+      }}
       className={style.hero}
     >
       <div className="container">
@@ -61,8 +61,8 @@ const HeroSection = ({ data, quests }: IHeroProps) => {
             <div className={classNames(style.quest, style.quest__main)}>
               <Image
                 className={style.quest__image}
-                width={1209}
-                height={497}
+                width={2209}
+                height={897}
                 src={`${$api}${
                   data?.photos_blur.find((element: IImage) => element.image)
                     ?.image

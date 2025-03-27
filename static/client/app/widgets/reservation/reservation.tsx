@@ -15,7 +15,7 @@ interface IReservationProps {
     date: string;
     slots: {
       time: string;
-      price: number;
+      price: string;
       is_booked: boolean;
     }[];
   }[];
@@ -85,11 +85,16 @@ export const Reservation: React.FC<IReservationProps> = ({
       </div>
       {quests && questSelected ? (
         <ReservationTable
+          id={selectedQuest?.id}
           name={selectedQuest?.name || ""}
           slots={avalibleSlot}
         />
       ) : (
-        <ReservationTable name={name} slots={slots!} />
+        <ReservationTable
+          id={selectedQuest?.id}
+          name={name || ""}
+          slots={slots!}
+        />
       )}
     </>
   );

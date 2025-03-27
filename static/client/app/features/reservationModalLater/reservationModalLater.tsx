@@ -9,9 +9,15 @@ import checkboxActive from "@/app/assets/checkbox__active.svg";
 import Link from "next/link";
 import classNames from "classnames";
 import { $api } from "@/app/entities/api";
+import { useForm } from "react-hook-form";
+import { queryClient } from "@/app/api/queryClient";
+import { fetchBookings } from "@/app/api/fetchBookings/fetchBookings";
+import { useMutation } from "@tanstack/react-query";
 
-interface IRezerv {
+export interface IRezerv {
+  id: number;
   name: string;
+  date: string;
 }
 
 interface Image {
@@ -28,7 +34,7 @@ interface Photos {
 interface IReservationProps {
   refDialog: RefObject<HTMLDialogElement | null>;
   onClose: () => void;
-  rezerv?: IRezerv;
+  rezerv: IRezerv | undefined;
   questList?: Array<Photos>;
 }
 
@@ -41,6 +47,35 @@ export const ReservationModalLater = ({
   const [enabled, setEnabled] = useState<boolean>(false);
   const [player, setPlayer] = useState<boolean>(false);
   const [policy, setPolicy] = useState<boolean>(false);
+
+  const mutateReservation = useMutation(
+    {
+      mutationFn: (data: {
+        horror: number;
+        data: string;
+        slot: number;
+        first_name: string;
+        last_name: string;
+        phone: string;
+        certificate: boolean;
+        comment: string;
+      }) =>
+        fetchBookings(
+          Number(rezerv?.id),
+          rezerv?.date ?? "",
+          data.slot,
+          data.first_name,
+          data.last_name,
+          data.phone,
+          data.certificate,
+          data.comment
+        ),
+      mutationKey: ["horrors"],
+    },
+    queryClient
+  );
+
+  const { register, handleSubmit } = useForm();
 
   if (!rezerv || !questList) {
     return null;
@@ -92,13 +127,44 @@ export const ReservationModalLater = ({
           </div>
         </div>
         <div className={style.modal__form}>
-          <form className={style.form}>
+          <form
+            onSubmit={handleSubmit(
+              ({
+                horror,
+                data,
+                slot,
+                first_name,
+                last_name,
+                phone,
+                certificate,
+                comment,
+              }) => {
+                mutateReservation.mutate({
+                  horror,
+                  data,
+                  slot,
+                  first_name,
+                  last_name,
+                  phone,
+                  certificate,
+                  comment,
+                });
+              }
+            )}
+            className={style.form}
+          >
             <div className={style.form__upper}>
               <FormField title="Имя">
-                <input className={style.input} placeholder="Иван" type="text" />
+                <input
+                  {...register("first_name")}
+                  className={style.input}
+                  placeholder="Иван"
+                  type="text"
+                />
               </FormField>
               <FormField title="Фамилия">
                 <input
+                  {...register("last_name")}
                   className={style.input}
                   placeholder="Иванов"
                   type="text"
@@ -108,6 +174,7 @@ export const ReservationModalLater = ({
             <div className={style.form__upper}>
               <FormField title="Дата">
                 <input
+                  {...register("date")}
                   className={style.input}
                   placeholder="1 марта"
                   type="text"
@@ -115,6 +182,7 @@ export const ReservationModalLater = ({
               </FormField>
               <FormField title="Время">
                 <input
+                  {...register("time")}
                   className={style.input}
                   placeholder="18:00"
                   type="time"
@@ -123,6 +191,7 @@ export const ReservationModalLater = ({
             </div>
             <FormField title="Ваш телефон">
               <input
+                {...register("phone")}
                 placeholder="+(375) 333-33-33-33"
                 className={style.input}
                 type="tel"
@@ -130,6 +199,7 @@ export const ReservationModalLater = ({
             </FormField>
             <label className={style.label} htmlFor="sertificate">
               <Checkbox
+                {...register("certificate", { value: enabled })}
                 className={style.check}
                 id="sertificate"
                 checked={enabled}
@@ -150,6 +220,7 @@ export const ReservationModalLater = ({
             </label>
             <FormField title="Комментарий">
               <textarea
+                {...register("comment")}
                 className={classNames(style.input, style.textarea)}
                 placeholder="Введите ваш комментарий"
               ></textarea>
