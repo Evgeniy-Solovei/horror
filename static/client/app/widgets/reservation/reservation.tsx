@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSlots } from "@/app/api/fetchSlots/fetchSlots";
 import { queryClient } from "@/app/api/queryClient";
+import { TitleUI } from "@/app/shared/ui/titleUI/titleUI";
+import calendar from "@/app/assets/calendar__reservation.svg";
 
 interface IReservationProps {
   quests?: Array<IFetchPromise>;
@@ -48,6 +50,7 @@ export const Reservation: React.FC<IReservationProps> = ({
   name,
 }) => {
   const [questSelected, setValueSelected] = useState<number>(1);
+  const [openLaterModal, setOpenLaterModal] = useState<boolean>(false);
   const id = questSelected;
 
   const { data: avalibleSlot } = useQuery(
@@ -62,6 +65,14 @@ export const Reservation: React.FC<IReservationProps> = ({
 
   return (
     <>
+      <TitleUI
+        title="Онлайн бронирование"
+        link="Оставить заявку на более позднюю дату"
+        icon={calendar}
+        isReservation
+        href="#"
+        openFunction={() => setOpenLaterModal(true)}
+      />
       {quests && (
         <ReservationSwiper
           selectedValue={questSelected}
@@ -88,6 +99,7 @@ export const Reservation: React.FC<IReservationProps> = ({
           id={selectedQuest?.id}
           name={selectedQuest?.name || ""}
           slots={avalibleSlot}
+          isOpen={openLaterModal}
         />
       ) : (
         <ReservationTable

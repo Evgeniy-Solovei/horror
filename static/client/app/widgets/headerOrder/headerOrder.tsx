@@ -83,7 +83,7 @@ export const HeaderOrder = () => {
               ))}
             </ul>
           </nav>
-          <LinkUI href={"/"}>Записаться</LinkUI>
+          <LinkUI href={"#reservation"}>Записаться</LinkUI>
         </div>
         <Link href={"/burger"} className={style.burger}>
           <Image src={burger} alt="burger" />

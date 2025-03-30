@@ -13,7 +13,7 @@ export const fetchBookings = (
   price?: string
 ) => {
   return axios
-    .post(`${$api}/api/bookings`, {
+    .post(`${$api}/api/bookings/`, {
       horror,
       data,
       slot,

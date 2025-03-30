@@ -1,8 +1,8 @@
 "use client";
 
 import { CustomSwiper } from "@/app/shared/ui/customSwiper/customSwiper";
-import { useMediaQuery } from "react-responsive";
 import style from "./heroSwiper.module.css";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface ICard {
   id: string;
@@ -14,7 +14,7 @@ const CARD: ICard[] = [
   {
     id: "1",
     title: "Уровень страха",
-    text: "По-настоящему страшные и уникальные квесты",
+    text: "По-настоящему страшные \n и уникальные квесты",
   },
   {
     id: "2",
@@ -24,14 +24,12 @@ const CARD: ICard[] = [
   {
     id: "3",
     title: "Атмосфера",
-    text: "Вы поверите в то, что вы находитесь в другой реальности",
+    text: "Вы поверите в то, \n что вы находитесь в другой реальности",
   },
 ];
 
 export const HeroSwiper = () => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return mediaQuery ? (
     <CustomSwiper config={{ slidesPerView: 1, className: style.swiper }}>

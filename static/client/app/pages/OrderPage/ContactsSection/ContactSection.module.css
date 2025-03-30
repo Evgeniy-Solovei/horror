@@ -63,13 +63,17 @@
     gap: 13px;
   }
 
+  .address__info {
+    padding: 29px 30px;
+    gap: 37px;
+  }
+
   .address__title {
     font-size: 24px;
     line-height: 100%;
   }
 
   .contacts__list {
-    padding: 29px 30px;
     gap: 8px;
   }
 
@@ -79,7 +83,7 @@
   }
 
   .address__map {
-    min-height: 110px;
+    min-height: 324px;
   }
 
   .contacts__svg {
@@ -89,5 +93,12 @@
 
   .contacts__item {
     gap: 11px;
+  }
+
+  .map__button {
+    max-width: 74px;
+    max-height: 74px;
+    width: 100%;
+    height: 100%;
   }
 }

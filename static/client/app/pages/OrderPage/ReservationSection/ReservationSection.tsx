@@ -24,6 +24,7 @@ const ReservationSection = ({ slots, name }: IReservationProps) => {
             link="Оставить заявку на более позднюю дату"
             icon={calendar}
             href="#"
+            isReservation
           />
           <Reservation name={name} slots={slots} />
         </div>

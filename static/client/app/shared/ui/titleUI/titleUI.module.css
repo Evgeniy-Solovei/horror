@@ -25,6 +25,15 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  color: #fff;
+  padding: 16px 24px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  border-radius: 8px;
+  background-color: var(--primary-red);
+  border: none;
+  cursor: pointer;
 }
 
 @media (max-width: 576px) {
@@ -44,5 +53,9 @@
     font-size: 12px;
     line-height: 150%;
     border-radius: 4px;
+  }
+
+  .none {
+    display: none;
   }
 }

@@ -60,6 +60,7 @@
 
   .card {
     padding: 29px 19px;
+    min-height: 78px;
   }
 
   .card__title {

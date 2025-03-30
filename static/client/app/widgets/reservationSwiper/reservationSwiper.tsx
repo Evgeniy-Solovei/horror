@@ -3,11 +3,11 @@
 import { CustomSwiper } from "@/app/shared/ui/customSwiper/customSwiper";
 import style from "./reservationSwiper.module.css";
 import Image from "next/image";
-import { useMediaQuery } from "react-responsive";
 import { IFetchPromise } from "@/app/pages/HomePage/PopularSection/PopularSection";
 import { $api } from "@/app/entities/api";
 import classNames from "classnames";
 import { Rating } from "@/app/shared/ui/rating/rating";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface IReservation {
   quests: Array<IFetchPromise>;
@@ -20,9 +20,7 @@ export const ReservationSwiper = ({
   onQuestSelect,
   selectedValue,
 }: IReservation) => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return (
     <CustomSwiper

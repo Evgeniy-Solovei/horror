@@ -10,6 +10,7 @@ import { ReservationModalLater } from "@/app/features/reservationModalLater/rese
 import { useQuery } from "@tanstack/react-query";
 import { fetchHorrors } from "@/app/api/fetchHorrors/fetchHorrors";
 import { queryClient } from "@/app/api/queryClient";
+import calendar from "@/app/assets/calendar__reservation.svg";
 
 interface ISlots {
   slots: {
@@ -22,6 +23,7 @@ interface ISlots {
   }[];
   name: string;
   id?: number;
+  isOpen?: boolean;
 }
 
 export interface IModalProps {
@@ -40,11 +42,9 @@ export const ReservationTable = ({ slots, name, id }: ISlots) => {
   const [selectedSlotLater, setSelectedSlotLater] = useState<{
     name: string;
     id: number;
-    date: string;
   }>();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogLaterRef = useRef<HTMLDialogElement>(null);
-  let dateLater: string = "";
 
   const handleSlotClick = (
     date: string,
@@ -55,8 +55,8 @@ export const ReservationTable = ({ slots, name, id }: ISlots) => {
     setSelectedSlot({ date, time, price, name, id: id ?? 0 });
   };
 
-  const handleSlotLaterClick = (name: string, dateLater: string) => {
-    setSelectedSlotLater({ name, id: id ?? 0, date: dateLater });
+  const handleSlotLaterClick = (name: string) => {
+    setSelectedSlotLater({ name, id: id ?? 0 });
     dialogLaterRef.current?.showModal();
   };
 
@@ -94,7 +94,6 @@ export const ReservationTable = ({ slots, name, id }: ISlots) => {
         {slots &&
           slots.slice(0, visibleSlots).map((element) => {
             const [date, day, weekend] = element.date.split(" ");
-            dateLater = element.date;
             return (
               <div key={element.date} className={style.table__row}>
                 <p className={style.table__number}>
@@ -107,9 +106,9 @@ export const ReservationTable = ({ slots, name, id }: ISlots) => {
                       key={index}
                       style={{
                         backgroundColor:
-                          elementInner.price === "120"
+                          Number(elementInner.price) === 120
                             ? "#0a8284"
-                            : elementInner.price === "140"
+                            : Number(elementInner.price) === 140
                             ? "#a40000"
                             : "#11b3d1",
                       }}
@@ -145,10 +144,11 @@ export const ReservationTable = ({ slots, name, id }: ISlots) => {
         <div className={style.reservation__more__block}>
           <button
             onClick={() => {
-              handleSlotLaterClick(name, dateLater);
+              handleSlotLaterClick(name);
             }}
             className={style.reservation__button}
           >
+            <Image width={16} height={16} src={calendar} alt="calendar" />
             Оставить заявку на более позднюю дату
           </button>
         </div>

@@ -13,11 +13,11 @@ import { useForm } from "react-hook-form";
 import { queryClient } from "@/app/api/queryClient";
 import { fetchBookings } from "@/app/api/fetchBookings/fetchBookings";
 import { useMutation } from "@tanstack/react-query";
+import { Rating } from "@/app/shared/ui/rating/rating";
 
 export interface IRezerv {
   id: number;
   name: string;
-  date: string;
 }
 
 interface Image {
@@ -27,7 +27,7 @@ interface Image {
 interface Photos {
   id: string;
   name: string;
-  photos: Array<Image>;
+  photos_back_card: Array<Image>;
   rating: number;
 }
 
@@ -62,7 +62,7 @@ export const ReservationModalLater = ({
       }) =>
         fetchBookings(
           Number(rezerv?.id),
-          rezerv?.date ?? "",
+          data.data,
           data.slot,
           data.first_name,
           data.last_name,
@@ -102,7 +102,7 @@ export const ReservationModalLater = ({
                 <li
                   style={{
                     backgroundImage: `url(${$api}${
-                      element.photos.find((item) => {
+                      element.photos_back_card.find((item) => {
                         return item.image;
                       })?.image
                     })`,
@@ -117,7 +117,9 @@ export const ReservationModalLater = ({
                     >
                       <div className={style.card__info}>
                         <span>{element.name}</span>
-                        <span>{element.rating}</span>
+                        <span>
+                          <Rating label={element.rating} />
+                        </span>
                       </div>
                     </Link>
                   </div>

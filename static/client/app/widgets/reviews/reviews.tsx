@@ -2,11 +2,9 @@
 
 import { Review } from "@/app/shared/ui/reviewUI/reviewUI";
 import style from "./reviews.module.css";
-import { useMediaQuery } from "react-responsive";
 import avatar from "@/app/assets/review__avatar.png";
 import { ReviewSwiper } from "@/app/features/reviewSwiper/reviewSwiper";
-import { useQuery } from "@tanstack/react-query";
-import { queryClient } from "@/app/api/queryClient";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface Review {
   id: number;
@@ -16,36 +14,39 @@ interface Review {
   rating: string;
 }
 
+const review: Review[] = [
+  {
+    id: 1,
+    datetime: "1",
+    name: "Ivan",
+    text: "text",
+    rating: "5",
+  },
+];
+
 export const Reviews = () => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
-  const {
-    data: review,
-    isLoading,
-    isError,
-  } = useQuery(
-    {
-      queryFn: async () => {
-        const response = await fetch(
-          "https://extrareality.by/api2/reviews?quest_id=3544"
-        );
-        return response.json();
-      },
-      retry: 1,
-      queryKey: ["review"],
-    },
-    queryClient
-  );
+  // const {
+  //   data: review,
+  //   isLoading,
+  //   isError,
+  // } = useQuery(
+  //   {
+  //     queryFn: () => fetchReviews(),
+  //     retry: 1,
+  //     queryKey: ["review"],
+  //   },
+  //   queryClient
+  // );
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (isError) {
-    return <div>Error loading reviews</div>;
-  }
+  // if (isError) {
+  //   return <div>Error loading reviews</div>;
+  // }
 
   return (
     <>

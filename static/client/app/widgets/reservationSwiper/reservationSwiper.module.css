@@ -52,3 +52,10 @@
   border: 1.18px solid #ffffff47;
   box-shadow: 0px 4px 20px 0px #ffffff33;
 }
+
+@media (max-width: 576px) {
+  .slide {
+    margin: 0 auto;
+    max-width: calc(100% - 6em);
+  }
+}

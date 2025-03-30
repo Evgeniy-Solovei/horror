@@ -18,6 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/app/api/queryClient";
 import { fetchBookings } from "@/app/api/fetchBookings/fetchBookings";
 import { useForm } from "react-hook-form";
+import { SuccessModal } from "../successModal/successModal";
 
 interface IReservationProps {
   refDialog: RefObject<HTMLDialogElement | null>;
@@ -59,6 +60,9 @@ export const ReservationModal = ({
           rezerv.price
         ),
       mutationKey: ["horrors"],
+      onSuccess() {
+        return <SuccessModal />;
+      },
     },
     queryClient
   );

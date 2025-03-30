@@ -42,8 +42,8 @@ const ContactsSection = () => {
         <div className="contacts__block">
           <TitleUI
             title="Наши контакты"
-            link="Запросить звонок"
-            href="#"
+            link="Позвонить"
+            href="tel:+(375) 445-33-02-78"
             icon={phone}
           />
           <address className={style.address}>

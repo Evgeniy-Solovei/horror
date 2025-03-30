@@ -1,9 +1,9 @@
 "use client";
 
-import { useMediaQuery } from "react-responsive";
 import style from "./about.module.css";
 import classNames from "classnames";
 import { CustomSwiper } from "@/app/shared/ui/customSwiper/customSwiper";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface ICard {
   id: string;
@@ -35,14 +35,13 @@ const CARD: ICard[] = [
 ];
 
 export const About = () => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return (
     <>
       {mediaQuery ? (
         <CustomSwiper
+          isAbout
           config={{
             slidesPerView: 1,
             className: style.swiper,

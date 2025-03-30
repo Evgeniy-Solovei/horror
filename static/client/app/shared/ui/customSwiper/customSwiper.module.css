@@ -5,6 +5,7 @@
 }
 
 .swiperButtonPrev {
+  display: none;
   position: absolute;
   left: 0;
   top: 50%;
@@ -15,6 +16,7 @@
 }
 
 .swiperButtonNext {
+  display: none;
   position: absolute;
   right: 0;
   top: 50%;
@@ -22,4 +24,37 @@
   background: none;
   border: none;
   z-index: 10;
+}
+
+.swiperButtonPCPrev {
+  position: absolute;
+  cursor: pointer;
+  top: -60px;
+  right: 0;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+
+.swiperButtonPCNext {
+  position: absolute;
+  cursor: pointer;
+  top: -60px;
+  right: 34px;
+  background: none;
+  border: none;
+  z-index: 10;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 576px) {
+  .swiperButtonPCNext,
+  .swiperButtonPCPrev {
+    display: none;
+  }
+
+  .swiperButtonNext,
+  .swiperButtonPrev {
+    display: block;
+  }
 }

@@ -1,17 +1,15 @@
 "use client";
 
 import { ReviewSwiper } from "@/app/features/reviewSwiper/reviewSwiper";
-import { useMediaQuery } from "react-responsive";
 import style from "./reviewOrder.module.css";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface IReviewOrderProps {
   className?: string;
 }
 
 export const ReviewsOrder = ({ className }: IReviewOrderProps) => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return (
     <>

@@ -2,9 +2,9 @@
 
 import { CustomSwiper } from "@/app/shared/ui/customSwiper/customSwiper";
 import Image from "next/image";
-import { useMediaQuery } from "react-responsive";
 import style from "./photoSwiper.module.css";
 import { $api } from "@/app/entities/api";
+import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
 interface IImage {
   image: string;
@@ -15,14 +15,13 @@ interface IPhotoProps {
 }
 
 export const PhotoSwiper = ({ photos }: IPhotoProps) => {
-  const mediaQuery = useMediaQuery({
-    query: "(max-width: 576px)",
-  });
+  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return (
     <div className={style.swiper__block}>
       <h2 className={style.title}>Фотографии</h2>
       <CustomSwiper
+        isQuest
         config={{
           spaceBetween: 37,
           slidesPerView: mediaQuery ? 1 : 4,

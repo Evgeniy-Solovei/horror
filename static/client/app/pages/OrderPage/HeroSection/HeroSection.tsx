@@ -7,6 +7,8 @@ import { IFetchPromise } from "../../HomePage/PopularSection/PopularSection";
 import Link from "next/link";
 import { $api } from "@/app/entities/api";
 import { Rating } from "@/app/shared/ui/rating/rating";
+import clock from "@/app/assets/clock__popular.svg";
+import people from "@/app/assets/people__popular.svg";
 
 interface IImage {
   image: string;
@@ -61,8 +63,8 @@ const HeroSection = ({ data, quests }: IHeroProps) => {
             <div className={classNames(style.quest, style.quest__main)}>
               <Image
                 className={style.quest__image}
-                width={2209}
-                height={897}
+                width={2509}
+                height={1097}
                 src={`${$api}${
                   data?.photos_blur.find((element: IImage) => element.image)
                     ?.image
@@ -77,9 +79,11 @@ const HeroSection = ({ data, quests }: IHeroProps) => {
               </div>
               <div className={style.quest__people}>
                 <span className={style.people__info}>
+                  <Image width={19} height={19} src={clock} alt="clock" />
                   {data?.travel_time} мин
                 </span>
                 <span className={style.people__info}>
+                  <Image width={14} height={19} src={people} alt="clock" />
                   {data?.count_players} чел.
                 </span>
                 <span className={style.people__info}>{data?.genre}</span>
