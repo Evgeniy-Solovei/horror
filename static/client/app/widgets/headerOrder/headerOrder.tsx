@@ -53,7 +53,7 @@ export const HeaderOrder = () => {
     <header className={style.header}>
       <div className="container">
         <div className={style.header__block}>
-          <Image src={burger} alt="logo" />
+          <span className={style.logo}>QH</span>
           <nav className="nav">
             <ul className={style.nav__list}>
               {NAV.map((element: INav) => (

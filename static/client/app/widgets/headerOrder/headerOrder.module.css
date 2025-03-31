@@ -49,6 +49,13 @@
   display: none;
 }
 
+.logo {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: "Poppins";
+  color: #fff;
+}
+
 @media (max-width: 576px) {
   .header {
     padding: 10px 0;
