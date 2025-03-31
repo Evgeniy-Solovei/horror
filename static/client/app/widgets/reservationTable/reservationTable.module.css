@@ -8,8 +8,8 @@
   }
 
   .table__info {
-    display: grid;
-    grid-template-columns: repeat(11, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 6px;
   }
 }
@@ -90,10 +90,6 @@
     text-align: left;
     font-size: 12px;
     line-height: 130%;
-  }
-
-  .table__info {
-    grid-template-columns: repeat(6, 1fr) !important;
   }
 
   .table__time {

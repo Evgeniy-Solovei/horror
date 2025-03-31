@@ -107,7 +107,7 @@ const HeroSection = ({ data, quests }: IHeroProps) => {
           </div>
 
           <div className={style.hero__up}>
-            <ReviewsOrder className={style.review} />
+            <ReviewsOrder />
             <PhotoSwiper photos={data?.photos} />
           </div>
         </div>

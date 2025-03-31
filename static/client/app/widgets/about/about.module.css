@@ -49,13 +49,25 @@
   text-align: center;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 1400px) {
   .about__list {
-    gap: 68px;
+    row-gap: 70px;
   }
 
   .about__item {
+    width: calc((100% - (20px * 1)) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .about__item {
     width: calc((100% - (20px * 0)) / 1);
+  }
+}
+
+@media (max-width: 576px) {
+  .about__list {
+    gap: 68px;
   }
 
   .card {

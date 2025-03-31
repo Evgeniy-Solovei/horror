@@ -1,29 +1,16 @@
 "use client";
 
-import { ReviewSwiper } from "@/app/features/reviewSwiper/reviewSwiper";
 import style from "./reviewOrder.module.css";
 import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
 
-interface IReviewOrderProps {
-  className?: string;
-}
-
-export const ReviewsOrder = ({ className }: IReviewOrderProps) => {
+export const ReviewsOrder = () => {
   const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
   return (
     <>
-      {mediaQuery ? (
-        <div className={className}>
-          <div className={style.title__block}>
-            <h2 className={style.title}>Отзывы</h2>
-            <hr />
-          </div>
-          <ReviewSwiper />
-        </div>
-      ) : (
+      {!mediaQuery && (
         <div className={style.review__block}>
-          <h3 className={style.review__title}>Отзывы</h3>
+          <h2 className={style.review__title}>Отзывы</h2>
           <ul className={style.review__list}>
             <li className={style.quest__more__down}>
               <div className={style.quest__moreInner}>

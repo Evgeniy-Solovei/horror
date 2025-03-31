@@ -55,6 +55,7 @@
   position: absolute;
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 .map__button:first-child {
@@ -67,6 +68,28 @@
   top: 43%;
   left: 62%;
   transform: translate(5%, 3%);
+}
+
+@media (max-width: 1200px) {
+  .address {
+    flex-direction: column;
+  }
+
+  .address__map {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .address__info {
+    padding: 61px 48px;
+  }
+
+  .contacts__item {
+    font-size: 28px;
+    line-height: 143%;
+  }
 }
 
 @media (max-width: 576px) {

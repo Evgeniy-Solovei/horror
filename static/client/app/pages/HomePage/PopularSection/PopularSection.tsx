@@ -8,6 +8,7 @@ import newIcon from "@/app/assets/poplar__new.png";
 import Link from "next/link";
 import { $api } from "@/app/entities/api";
 import { Rating } from "@/app/shared/ui/rating/rating";
+import questionSvg from "@/app/assets/question__svg.svg";
 
 interface IPopularProps {
   id: string;
@@ -133,6 +134,28 @@ const PopularSection = async () => {
                 </Link>
               </li>
             ))}
+            <li className={style.popular__item}>
+              <div className={classNames(style.card, style.anons)}>
+                <Image
+                  width={96}
+                  height={96}
+                  src={questionSvg}
+                  alt="question"
+                />
+                <span>Скоро ожидается анонс</span>
+              </div>
+            </li>
+            <li className={style.popular__item}>
+              <div className={classNames(style.card, style.anons)}>
+                <Image
+                  width={96}
+                  height={96}
+                  src={questionSvg}
+                  alt="question"
+                />
+                <span>Скоро ожидается анонс</span>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

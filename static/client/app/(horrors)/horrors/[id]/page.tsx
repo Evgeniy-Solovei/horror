@@ -11,6 +11,9 @@ const PoliceSection = dynamic(
 const ReservationSection = dynamic(
   () => import("../../../pages/OrderPage/ReservationSection/ReservationSection")
 );
+const ReviewsSection = dynamic(
+  () => import("../../../pages/OrderPage/ReviewsSection/ReviewsSection")
+);
 const ContactsSection = dynamic(
   () => import("../../../pages/OrderPage/ContactsSection/ContactsSection")
 );
@@ -62,6 +65,7 @@ const HorrorsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <HeroSection quests={quests} data={data} />
       <PoliceSection />
       <ReservationSection name={data.name} slots={dataSlots} />
+      <ReviewsSection />
       <ContactsSection />
     </>
   );

@@ -36,6 +36,12 @@
   -webkit-text-fill-color: #0000;
 }
 
+@media (max-width: 992px) {
+  .hero__image {
+    display: none;
+  }
+}
+
 @media (max-width: 576px) {
   .hero {
     background-image: url("../../../assets/hero__bg_phone.webp");
@@ -56,9 +62,5 @@
   .title {
     font-size: 53.53px;
     line-height: 100%;
-  }
-
-  .hero__image {
-    display: none;
   }
 }

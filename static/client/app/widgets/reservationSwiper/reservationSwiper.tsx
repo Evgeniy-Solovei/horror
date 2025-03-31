@@ -15,17 +15,32 @@ interface IReservation {
   selectedValue: number;
 }
 
+const useAdaptiveSwiper = () => {
+  const isSm = useCustomMediaQuery("(max-width: 576px)");
+  const isMd = useCustomMediaQuery("(max-width: 768px)");
+  const isLg = useCustomMediaQuery("(max-width: 992px)");
+  const isXl = useCustomMediaQuery("(max-width: 1200px)");
+  const isXXl = useCustomMediaQuery("(min-width: 1400px)");
+
+  if (isSm) return 1;
+  if (isMd) return 2;
+  if (isLg) return 3;
+  if (isXl) return 4;
+  if (isXXl) return 5;
+  return 4;
+};
+
 export const ReservationSwiper = ({
   quests,
   onQuestSelect,
   selectedValue,
 }: IReservation) => {
-  const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
+  const slidesPerView = useAdaptiveSwiper();
 
   return (
     <CustomSwiper
       config={{
-        slidesPerView: mediaQuery ? 1 : 5,
+        slidesPerView: slidesPerView,
         spaceBetween: 11,
         className: style.swiper,
         content: "center",
