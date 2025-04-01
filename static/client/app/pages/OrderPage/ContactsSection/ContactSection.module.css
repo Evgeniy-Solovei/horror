@@ -57,6 +57,15 @@
   border: none;
 }
 
+.map__button__mogile {
+  position: absolute;
+  background: none;
+  border: none;
+  right: 15%;
+  top: 30%;
+  transform: translateY(50%);
+}
+
 @media (max-width: 576px) {
   .address {
     flex-direction: column;

@@ -6,6 +6,17 @@ import { HeroSwiper } from "@/app/widgets/heroSwiper/heroSwiper";
 const HeroSection = () => {
   return (
     <section id="hero" className={style.hero}>
+      <video
+        className={style.hero__bg}
+        preload={"auto"}
+        muted
+        loop
+        playsInline
+        autoPlay={true}
+        controls={false}
+      >
+        <source src={"/hero__video.mp4"} />
+      </video>
       <div className="container">
         <div className={style.hero__block}>
           <div className={style.hero__info}>

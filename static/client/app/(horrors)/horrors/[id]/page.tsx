@@ -66,7 +66,7 @@ const HorrorsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <PoliceSection />
       <ReservationSection name={data.name} slots={dataSlots} />
       <ReviewsSection />
-      <ContactsSection />
+      <ContactsSection station={data.location} />
     </>
   );
 };

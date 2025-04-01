@@ -15,6 +15,10 @@ interface IContacts {
   icon: StaticImageData;
 }
 
+interface IContactsProps {
+  station: string;
+}
+
 const CONTACTS: IContacts[] = [
   {
     id: "1",
@@ -35,7 +39,7 @@ const CONTACTS: IContacts[] = [
   },
 ];
 
-const ContactsSection = () => {
+const ContactsSection = ({ station }: IContactsProps) => {
   return (
     <section className="contacts section" id="contacts">
       <div className="container">
@@ -48,7 +52,13 @@ const ContactsSection = () => {
           />
           <address className={style.address}>
             <div className={style.map}>
-              <button className={style.map__button}>
+              <button
+                className={
+                  station === "м. Могилевская"
+                    ? style.map__button__mogile
+                    : style.map__button
+                }
+              >
                 <Image src={locationActive} alt="location" />
               </button>
               <Image className={style.address__map} src={map} alt="map" />
@@ -68,9 +78,13 @@ const ContactsSection = () => {
                     ) : (
                       <a
                         target="_blank"
-                        href={"https://yandex.ru/maps/-/CHFH7Bn6"}
+                        href={
+                          station === "м. Могилевская"
+                            ? "https://yandex.ru/maps/-/CHR2BC~K"
+                            : "https://yandex.ru/maps/-/CHFH7Bn6"
+                        }
                       >
-                        ул. Ангарская, 7
+                        {station}
                       </a>
                     )}
                   </li>
