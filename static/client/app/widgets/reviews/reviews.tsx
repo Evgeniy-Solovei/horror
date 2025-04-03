@@ -5,6 +5,9 @@ import style from "./reviews.module.css";
 import avatar from "@/app/assets/review__avatar.png";
 import { ReviewSwiper } from "@/app/features/reviewSwiper/reviewSwiper";
 import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReviews } from "@/app/api/fetchReviews/fetchReviews";
+import { queryClient } from "@/app/api/queryClient";
 
 interface Review {
   id: number;
@@ -14,39 +17,29 @@ interface Review {
   rating: string;
 }
 
-const review: Review[] = [
-  {
-    id: 1,
-    datetime: "1",
-    name: "Ivan",
-    text: "text",
-    rating: "5",
-  },
-];
-
 export const Reviews = () => {
   const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
 
-  // const {
-  //   data: review,
-  //   isLoading,
-  //   isError,
-  // } = useQuery(
-  //   {
-  //     queryFn: () => fetchReviews(),
-  //     retry: 1,
-  //     queryKey: ["review"],
-  //   },
-  //   queryClient
-  // );
+  const {
+    data: review,
+    isLoading,
+    isError,
+  } = useQuery(
+    {
+      queryFn: () => fetchReviews(),
+      retry: 1,
+      queryKey: ["review"],
+    },
+    queryClient
+  );
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (isError) {
-  //   return <div>Error loading reviews</div>;
-  // }
+  if (isError) {
+    return <div>Error loading reviews</div>;
+  }
 
   return (
     <>
