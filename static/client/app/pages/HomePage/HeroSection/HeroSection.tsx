@@ -15,7 +15,21 @@ const HeroSection = () => {
         autoPlay={true}
         controls={false}
       >
-        <source src={"/hero__video.mp4"} />
+        <source
+          src={"/hero__576.mp4"}
+          media="(max-width: 576px)"
+          type="video/mp4"
+        />
+        <source
+          src={"/hero__1200.mp4"}
+          media="(max-width: 1200px)"
+          type="video/mp4"
+        />
+        <source
+          src={"/hero__video.mp4"}
+          media="(min-width: 1200px)"
+          type="video/mp4"
+        />
       </video>
       <div className="container">
         <div className={style.hero__block}>
