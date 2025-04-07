@@ -1,0 +1,149 @@
+.address {
+  font-style: normal;
+  display: flex;
+  gap: 84px;
+}
+
+.address__info {
+  padding: 98px 81px;
+  display: flex;
+  flex-direction: column;
+  gap: 101px;
+  background-color: #20393a;
+  border: 2px solid #ffffff47;
+  border-radius: 11px;
+}
+
+.address__title {
+  padding-bottom: 26px;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 100%;
+  border-bottom: 1px solid #fff;
+}
+
+.contacts__list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.contacts__item {
+  display: flex;
+  align-items: center;
+  gap: 41px;
+  font-weight: 400;
+  font-size: 32.16px;
+  line-height: 143%;
+}
+
+.address__map {
+  max-width: 796px;
+  min-height: 590px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+}
+
+.map {
+  position: relative;
+}
+
+.map__button {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.map__button:first-child {
+  top: 9%;
+  left: 10%;
+  transform: translate(3%, -10%);
+}
+
+.map__button:nth-child(2) {
+  top: 43%;
+  left: 62%;
+  transform: translate(5%, 3%);
+}
+
+@media (max-width: 1200px) {
+  .address {
+    flex-direction: column;
+  }
+
+  .address__map {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .address__info {
+    padding: 61px 48px;
+  }
+
+  .contacts__item {
+    font-size: 28px;
+    line-height: 143%;
+  }
+}
+
+@media (max-width: 576px) {
+  .address {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .address__info {
+    padding: 29px 30px;
+    gap: 37px;
+  }
+
+  .address__title {
+    font-size: 24px;
+    line-height: 100%;
+  }
+
+  .contacts__list {
+    gap: 8px;
+  }
+
+  .contacts__item {
+    font-size: 12px;
+    line-height: 143%;
+  }
+
+  .address__map {
+    min-height: 324px;
+  }
+
+  .contacts__svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .contacts__item {
+    gap: 11px;
+  }
+
+  .map__button {
+    max-width: 74px;
+    max-height: 74px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .map__button:first-child {
+    left: 12%;
+    top: 20%;
+  }
+
+  .map__button:nth-child(2) {
+    left: 67%;
+    top: 53%;
+  }
+}

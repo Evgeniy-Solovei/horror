@@ -1,0 +1,292 @@
+.hero {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.hero__block {
+  padding-top: 129px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  height: 100%;
+}
+
+.quest {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-white);
+  border: 1px solid #28282800;
+}
+
+.quest__main {
+  padding: 40px;
+  max-width: 1209px;
+  min-height: 497px;
+  height: 100%;
+  width: 100%;
+
+  box-shadow: 0px 4px 20px 0px #ffffff33;
+  border-radius: 30px;
+  position: relative;
+}
+
+.quest__image {
+  position: absolute;
+  height: auto;
+  width: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.quest__station {
+  margin-bottom: 30px;
+}
+
+.quest__upper {
+  margin-bottom: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.quest__new {
+  padding: 8px 12px;
+  font-weight: 400;
+  font-size: 21.47px;
+  line-height: 21.47px;
+  background: linear-gradient(90deg, #cd2b2b 15.05%, #090909 100%);
+  border-radius: 67.08px;
+}
+
+.quest__grade {
+  font-weight: 400;
+  font-size: 45.96px;
+  line-height: 37.53px;
+}
+
+.quest__title {
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 82.23px;
+}
+
+.quest__inner {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.quest__station {
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32.74px;
+}
+
+.quest__info {
+  max-width: 550px;
+  display: flex;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.quest__people {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  z-index: 3;
+}
+
+.people__info {
+  padding: 7px 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  background: #ffffff33;
+  border-radius: 67.08px;
+}
+
+.hero__up {
+  display: flex;
+  gap: 40px;
+  color: var(--primary-white);
+}
+
+.hero__upper__up {
+  padding: 24px 22px;
+  max-width: 347px;
+  max-height: 497px;
+  width: 100%;
+  backdrop-filter: blur(4px);
+  background-color: #20393a;
+  border: 3px solid #ffffff47;
+  border-radius: 36px;
+  overflow: hidden;
+}
+
+.quest__more {
+  border-radius: 16px;
+  color: #fff;
+}
+
+.card__inner {
+  padding: 19px 13px;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #46464633;
+  border-radius: inherit;
+  backdrop-filter: blur(22.96983528137207px);
+}
+
+.card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  border-radius: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.card__slide {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 168px;
+  border-radius: 18.95px;
+}
+
+.fear {
+  padding: 15px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  background: #ffffff33;
+  border-radius: 67.08px;
+}
+
+.fear span {
+  color: #03b9bb;
+}
+
+.quest__lower {
+  display: flex;
+  align-items: flex-end;
+  z-index: 3;
+}
+
+.fear__block {
+  display: flex;
+  gap: 13px;
+}
+
+.quest__more__title {
+  margin-bottom: 24px;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+}
+
+.quest__list {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  height: calc(100% - 1em);
+}
+
+.quest__list::-webkit-scrollbar {
+  width: 0;
+}
+
+@media (max-width: 576px) {
+  .hero__upper__up {
+    display: none;
+  }
+
+  .photos {
+    order: 2;
+  }
+
+  .hero__block {
+    padding-top: 70px;
+  }
+
+  .hero__up {
+    flex-direction: column;
+  }
+
+  .quest__main {
+    padding: 14px;
+    min-height: 317px;
+  }
+
+  .quest__new {
+    font-size: 8px;
+    line-height: 100%;
+  }
+
+  .quest__grade {
+    font-size: 12px;
+    line-height: 10.68px;
+  }
+
+  .quest__title {
+    margin-bottom: 7px;
+    font-size: 24px;
+    line-height: 128%;
+  }
+
+  .quest__station {
+    margin-bottom: 15px;
+    font-size: 8px;
+    line-height: 100%;
+  }
+
+  .quest__info {
+    margin-bottom: 15px;
+    font-size: 8px;
+    line-height: 120%;
+  }
+
+  .people__info {
+    padding: 2px 5px;
+    font-size: 8px;
+    line-height: 100%;
+  }
+
+  .quest__lower {
+    flex-direction: column;
+  }
+
+  .fear__block {
+    align-self: flex-start;
+  }
+
+  .fear {
+    padding: 2px 5px;
+    font-size: 8px;
+    line-height: 100%;
+  }
+}

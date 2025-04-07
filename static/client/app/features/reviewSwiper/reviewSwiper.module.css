@@ -1,0 +1,6 @@
+@media (max-width: 576px) {
+  .review {
+    margin: 0 auto;
+    max-width: calc(100% - 7em);
+  }
+}
