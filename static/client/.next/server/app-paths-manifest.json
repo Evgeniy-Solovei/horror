@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/@modal/(.)burger/page": "app/@modal/(.)burger/page.js",
+  "/(root)/burger/page": "app/(root)/burger/page.js",
+  "/(root)/agreement/page": "app/(root)/agreement/page.js",
+  "/(root)/page": "app/(root)/page.js",
+  "/(horrors)/horrors/[id]/page": "app/(horrors)/horrors/[id]/page.js",
+  "/(root)/policy/page": "app/(root)/policy/page.js"
+}
