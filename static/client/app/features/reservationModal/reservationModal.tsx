@@ -89,15 +89,15 @@ export const ReservationModal = ({
           </div>
           <ul className={style.quest__list} style={{ width: "100%" }}>
             <li className={style.quest__item}>
-              <Image width={74} height={74} src={calendar} alt="calendar" />
+              <Image width={54} height={54} src={calendar} alt="calendar" />
               {rezerv.date}
             </li>
             <li className={style.quest__item}>
-              <Image width={74} height={74} src={clock} alt="calendar" />
+              <Image width={54} height={54} src={clock} alt="calendar" />
               {rezerv.time}
             </li>
             <li className={style.quest__item}>
-              <Image width={74} height={74} src={money} alt="calendar" />
+              <Image width={54} height={54} src={money} alt="calendar" />
               {rezerv.price} Br
             </li>
           </ul>

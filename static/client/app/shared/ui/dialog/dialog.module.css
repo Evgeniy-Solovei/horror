@@ -1,7 +1,7 @@
 .modal {
-  padding: 32px;
+  padding: 0;
   max-width: 1600px;
-  height: 80%;
+  height: 90%;
   width: 100%;
   background-color: #080f0f;
   border: 3px solid #ffffff47;
@@ -22,8 +22,8 @@
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 32px;
+  right: 32px;
   background: none;
   border: none;
 }

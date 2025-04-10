@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchReviews } from "@/app/api/fetchReviews/fetchReviews";
 import { queryClient } from "@/app/api/queryClient";
 
-interface Review {
+export interface ReviewProps {
   id: number;
   datetime: string;
   name: string;
@@ -44,21 +44,24 @@ export const Reviews = () => {
   return (
     <>
       {mediaQuery ? (
-        <ReviewSwiper />
+        <ReviewSwiper reviews={review} />
       ) : (
         <div className={style.reviews__block}>
-          {review.map((element: Review) => (
-            <Review
-              key={element.id}
-              id={element.id}
-              name={element.name}
-              icon={avatar}
-              reviewTime={"14 дней назад"}
-              blockquote={element.text}
-              link={""}
-              stars={undefined}
-            />
-          ))}
+          {review
+            .filter((elemen: ReviewProps, index: number) => {
+              return index < 8;
+            })
+            .map((element: ReviewProps) => (
+              <Review
+                key={element.id}
+                id={element.id}
+                name={element.name}
+                icon={avatar}
+                reviewTime={"14 дней назад"}
+                blockquote={element.text}
+                stars={undefined}
+              />
+            ))}
         </div>
       )}
     </>

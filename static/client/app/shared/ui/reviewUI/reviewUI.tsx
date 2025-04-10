@@ -1,7 +1,9 @@
-import Link from "next/link";
+"use client";
+
 import style from "./reviewUI.module.css";
 import Image, { StaticImageData } from "next/image";
 import quoteSvg from "@/app/assets/review__quote.svg";
+import { useState } from "react";
 
 interface IReviewProps {
   id: number;
@@ -9,7 +11,6 @@ interface IReviewProps {
   icon: StaticImageData;
   reviewTime: string;
   blockquote: string;
-  link: string;
   stars: React.ReactNode;
   className?: string;
 }
@@ -19,11 +20,12 @@ export const Review = ({
   name,
   icon,
   blockquote,
-  link,
   stars,
   reviewTime,
   className,
 }: IReviewProps) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   return (
     <div className={`${style.review} ${className}`} key={id}>
       <div className={style.review__upper}>
@@ -43,12 +45,21 @@ export const Review = ({
         src={quoteSvg}
         alt="quoteSvg"
       />
-      <blockquote className={style.review__blockquote}>{blockquote}</blockquote>
-      <div className={style.review__lower}>
-        <Link className={style.review__link} href={link}>
-          Читать отзыв полностью
-        </Link>
-        <span>{stars}</span>
+      <div className={style.review__info__block}>
+        <blockquote className={style.review__blockquote}>
+          {isExpanded || blockquote.length <= 307
+            ? blockquote
+            : `${blockquote.slice(0, 307)}...`}
+        </blockquote>
+        <div className={style.review__lower}>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className={style.review__link}
+          >
+            Читать отзыв полностью
+          </button>
+          <span>{stars}</span>
+        </div>
       </div>
     </div>
   );
