@@ -1,6 +1,13 @@
 import axios from "axios";
 
-export const fetchReviews = () => {
+interface IReviews {
+  id: number;
+  datetime: string;
+  name: string;
+  text: string;
+}
+
+export const fetchReviews = (): Promise<IReviews[]> => {
   return axios
     .get("https://extrareality.by/api2/reviews?quest_id=3544")
     .then((response) => {

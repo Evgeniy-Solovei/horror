@@ -8,6 +8,14 @@ interface IReviews {
   reviews: ReviewProps[];
 }
 
+function getDate(date: string) {
+  const dateReview = new Date(date);
+  const dateDate = dateReview.getDate();
+  const dateMonth = dateReview.getMonth() + 1;
+  const dateYear = dateReview.getFullYear();
+  return `${dateDate}.${dateMonth}.${dateYear}`;
+}
+
 export const ReviewSwiper = ({ reviews }: IReviews) => {
   return (
     <CustomSwiper config={{ slidesPerView: 1 }}>
@@ -22,9 +30,8 @@ export const ReviewSwiper = ({ reviews }: IReviews) => {
             id={element.id}
             name={element.name}
             icon={avatar}
-            reviewTime={"14 дней назад"}
+            reviewTime={getDate(element.datetime)}
             blockquote={element.text}
-            stars={undefined}
           />
         ))}
     </CustomSwiper>

@@ -11,7 +11,6 @@ interface IReviewProps {
   icon: StaticImageData;
   reviewTime: string;
   blockquote: string;
-  stars: React.ReactNode;
   className?: string;
 }
 
@@ -20,7 +19,6 @@ export const Review = ({
   name,
   icon,
   blockquote,
-  stars,
   reviewTime,
   className,
 }: IReviewProps) => {
@@ -58,7 +56,6 @@ export const Review = ({
           >
             Читать отзыв полностью
           </button>
-          <span>{stars}</span>
         </div>
       </div>
     </div>

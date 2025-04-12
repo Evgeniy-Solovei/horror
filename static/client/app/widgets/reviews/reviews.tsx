@@ -14,7 +14,14 @@ export interface ReviewProps {
   datetime: string;
   name: string;
   text: string;
-  rating: string;
+}
+
+function getDate(date: string) {
+  const dateReview = new Date(date);
+  const dateDate = dateReview.getDate();
+  const dateMonth = dateReview.getMonth() + 1;
+  const dateYear = dateReview.getFullYear();
+  return `${dateDate}.${dateMonth}.${dateYear}`;
 }
 
 export const Reviews = () => {
@@ -22,8 +29,8 @@ export const Reviews = () => {
 
   const {
     data: review,
-    isLoading,
     isError,
+    isLoading,
   } = useQuery(
     {
       queryFn: () => fetchReviews(),
@@ -33,35 +40,35 @@ export const Reviews = () => {
     queryClient
   );
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isError) {
+    return "Отызвы не найдены";
   }
 
-  if (isError) {
-    return <div>Error loading reviews</div>;
+  if (isLoading) {
+    return "Загрузка отзывов";
   }
 
   return (
     <>
       {mediaQuery ? (
-        <ReviewSwiper reviews={review} />
+        <ReviewSwiper reviews={!review ? [] : review} />
       ) : (
         <div className={style.reviews__block}>
-          {review
-            .filter((elemen: ReviewProps, index: number) => {
-              return index < 8;
-            })
-            .map((element: ReviewProps) => (
-              <Review
-                key={element.id}
-                id={element.id}
-                name={element.name}
-                icon={avatar}
-                reviewTime={"14 дней назад"}
-                blockquote={element.text}
-                stars={undefined}
-              />
-            ))}
+          {review &&
+            review
+              .filter((elemen, index: number) => {
+                return index < 8;
+              })
+              .map((element) => (
+                <Review
+                  key={element.id}
+                  id={element.id}
+                  name={element.name}
+                  icon={avatar}
+                  reviewTime={getDate(element.datetime)}
+                  blockquote={element.text}
+                />
+              ))}
         </div>
       )}
     </>

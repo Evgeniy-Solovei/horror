@@ -2,7 +2,7 @@
   padding: 56px 137px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 102px 20px;
+  gap: 32px 20px;
   color: #fff;
   overflow-y: auto;
 }

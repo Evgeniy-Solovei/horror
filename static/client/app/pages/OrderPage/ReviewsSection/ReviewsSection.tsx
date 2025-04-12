@@ -3,9 +3,19 @@
 import { ReviewSwiper } from "@/app/features/reviewSwiper/reviewSwiper";
 import style from "./ReviewsSection.module.css";
 import useCustomMediaQuery from "@/app/features/useCustomMediaQuery/useCustomMediaQuery";
+import { useQuery } from "@tanstack/react-query";
+import { fetchReviews } from "@/app/api/fetchReviews/fetchReviews";
+import { queryClient } from "@/app/api/queryClient";
 
 const ReviewsSection = () => {
   const mediaQuery = useCustomMediaQuery("(max-width: 576px)");
+  const { data: review } = useQuery(
+    {
+      queryKey: ["reviews"],
+      queryFn: () => fetchReviews(),
+    },
+    queryClient
+  );
 
   return (
     <>
@@ -16,7 +26,7 @@ const ReviewsSection = () => {
               <h2 className={style.title}>Отзывы</h2>
               <hr />
             </div>
-            <ReviewSwiper />
+            <ReviewSwiper reviews={review!} />
           </div>
         </section>
       )}
