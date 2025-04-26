@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
-import style from "./burger-modal.module.css";
 import Image from "next/image";
-import close from "@/app/assets/close__modal.svg";
+import close from "@/app/assets/svg/close_burger.svg";
 
 interface INav {
   id: string;
@@ -45,8 +44,9 @@ const BurgerModal = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (dialogRef.current) {
-      dialogRef.current?.showModal();
+    const dialog = dialogRef.current;
+    if (dialog && typeof dialog.showModal === "function" && !dialog.open) {
+      dialog.showModal();
       document.body.style.overflow = "hidden";
     }
 
@@ -57,45 +57,58 @@ const BurgerModal = () => {
 
   const handleCloseModal = (path: string) => {
     dialogRef.current?.close();
-
     setTimeout(() => {
       router.push(path);
-    }, 150);
+    }, 50);
   };
 
   return (
     <dialog
-      className={style.dialog}
+      style={{
+        padding: 0,
+        margin: 0,
+        border: "none",
+        maxWidth: "100vw",
+        maxHeight: "100vh",
+      }}
+      className={"bg-[#0F0F0F] text-white w-screen h-screen "}
       ref={dialogRef}
       onClose={() => router.back()}
     >
-      <div className={style.dialog__header}>
-        <h1 className={style.dialog__title}>Quest House</h1>
-        <button
-          className={style.dialog__close}
-          onClick={() => dialogRef.current?.close()}
-        >
-          <Image src={close} alt="close modal" />
-        </button>
-      </div>
-      <ul className={style.burger__list}>
-        {NAV.map((element) => (
-          <li key={element.id}>
-            <button
-              className={style.burger__link}
-              onClick={() => handleCloseModal(element.path)}
-            >
-              {element.text}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="px-[23px] py-[15px] h-[90%] w-full flex flex-col">
+        <div className={"mb-[59px] flex justify-between items-center"}>
+          <span
+            style={{ fontFamily: "var(--font-poppins)" }}
+            className={"text-[30px] font-[800] text-(--red)"}
+          >
+            Quest House
+          </span>
+          <button
+            className={"outline-none border-none bg-none"}
+            onClick={() => dialogRef.current?.close()}
+          >
+            <Image src={close} alt="close modal" />
+          </button>
+        </div>
+        <ul className={"flex flex-col gap-[15px] mb-auto"}>
+          {NAV.map((element) => (
+            <li key={element.id}>
+              <button
+                className={""}
+                onClick={() => handleCloseModal(element.path)}
+              >
+                {element.text}
+              </button>
+            </li>
+          ))}
+        </ul>
 
-      <div className={style.dialog__info}>
-        <span>Телефон:</span>
-        <a className={style.dialog__phone} href="tel:+(375) 445 33 02 78 ">
-          +(375) 445 33 02 78
-        </a>
+        <div className={"flex flex-col"}>
+          <span className="text-[12px]">Телефон:</span>
+          <a className={"text-[20px]"} href="tel:+(375) 445 33 02 78 ">
+            +(375) 445 33 02 78
+          </a>
+        </div>
       </div>
     </dialog>
   );

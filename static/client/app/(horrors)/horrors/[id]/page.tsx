@@ -1,22 +1,22 @@
-import { $api } from "@/app/entities/api";
+import { api } from "@/app/api/api";
+import { fetchOneHorror } from "@/app/api/horrors/fetchHorrors";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
-const HeroSection = dynamic(
-  () => import("../../../pages/OrderPage/HeroSection/HeroSection")
+const HeroHorrorSection = dynamic(
+  () => import("@/app/pages/OrderPage/HeroHorrorSection")
 );
-const PoliceSection = dynamic(
-  () => import("../../../pages/OrderPage/PoliceSection/PoliceSection")
+const Awards = dynamic(() => import("@/app/widgets/awards/awards"));
+const RulesSection = dynamic(
+  () => import("@/app/pages/OrderPage/RulesSection")
 );
-const ReservationSection = dynamic(
-  () => import("../../../pages/OrderPage/ReservationSection/ReservationSection")
+const ReservationHorrorSection = dynamic(
+  () => import("@/app/pages/OrderPage/ReservationHorrorSection")
 );
 const ReviewsSection = dynamic(
-  () => import("../../../pages/OrderPage/ReviewsSection/ReviewsSection")
+  () => import("@/app/pages/HomePage/ReviewsSection")
 );
-const ContactsSection = dynamic(
-  () => import("../../../pages/OrderPage/ContactsSection/ContactsSection")
-);
+const Contacts = dynamic(() => import("@/app/widgets/contacts/contacts"));
 
 export async function generateMetadata({
   params,
@@ -24,51 +24,56 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  const horrors = await fetchOneHorror(id);
 
-  try {
-    const res = await fetch(`${$api}/api/horrors/${id}`);
-    const data = await res.json();
-
-    return {
-      title: `Quest House - ${data.name}`,
-      description: data.description,
-      keywords: "квест, ужас, приключение",
-    };
-  } catch (err) {
-    console.error("Ошибка запроса метадаты", err);
-    return {
-      title: "Quest House - Страница квеста",
-      description:
-        "Погрузитесь в мир ужаса с нашими захватывающими хоррор-квестами! Испытайте свои нервы, решая загадки и преодолевая страхи в темных и таинственных локациях. Идеально подходит для любителей острых ощущений и командных приключений. Забронируйте свой квест уже сегодня и откройте для себя незабываемые эмоции!",
-      keywords: "квест, ужас, приключение",
-    };
-  }
+  return {
+    title: `Quest House - ${horrors.name}`,
+    description: horrors.description,
+    keywords: "квест, ужас, приключение, Quest House",
+    openGraph: {
+      title: `Quest House - ${horrors.name}`,
+      description: horrors.description,
+      url: `${api}/horrors/${id}`,
+      type: "article",
+    },
+  };
 }
 
-const HorrorsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+export default async function HorrorsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-
-  const questsFetch = await fetch(`${$api}/api/horrors/`);
-  const res = await fetch(`${$api}/api/horrors/${id}`);
-  const resSlots = await fetch(`${$api}/api/horrors/${id}/available-slots/`);
-
-  const quests = await questsFetch.json();
-  const data = await res.json();
-  const dataSlots = await resSlots.json();
-
-  if (!quests || !data || !dataSlots) {
-    console.error("Ошибка запроса");
-  }
+  const horrors = await fetchOneHorror(id);
 
   return (
-    <>
-      <HeroSection quests={quests} data={data} />
-      <PoliceSection />
-      <ReservationSection name={data.name} slots={dataSlots} />
-      <ReviewsSection />
-      <ContactsSection station={data.location} />
-    </>
+    <main className="main">
+      <HeroHorrorSection
+        complexity={horrors.complexity}
+        count_players={horrors.count_players}
+        description={horrors.description}
+        fear={horrors.fear}
+        genre={horrors.genre}
+        id={horrors.id}
+        is_active={horrors.is_active}
+        location={horrors.location}
+        name={horrors.name}
+        novelty={horrors.novelty}
+        photos={horrors.photos}
+        photos_back_card={horrors.photos_back_card}
+        photos_blur={horrors.photos_blur}
+        rating={horrors.rating}
+        registration_date={horrors.registration_date}
+        travel_time={horrors.travel_time}
+      />
+      <Awards id={horrors.id} />
+      <RulesSection />
+      <ReservationHorrorSection horror={horrors} />
+      <div className="block md:hidden">
+        <ReviewsSection />
+      </div>
+      <Contacts location={horrors.location} />
+    </main>
   );
-};
-
-export default HorrorsPage;
+}

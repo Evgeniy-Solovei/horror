@@ -4,15 +4,12 @@ import "./globals.css";
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
 const poppins = Poppins({
   variable: "--font-poppins",
+  weight: ["800"],
   subsets: ["latin"],
-  display: "swap",
-  weight: ["600", "800"],
 });
 
 export default function RootLayout({
@@ -23,8 +20,8 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body className={`${nunito.variable} ${poppins.variable}`}>
+    <html className="scroll-smooth" lang="ru">
+      <body className={`${nunito.variable} ${poppins.variable} antialiased`}>
         {children}
         {modal}
       </body>

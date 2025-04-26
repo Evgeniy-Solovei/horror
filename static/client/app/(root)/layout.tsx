@@ -1,13 +1,19 @@
-import { Metadata } from "next";
+import { Footer } from "../widgets/footer/footer";
 import { Header } from "../widgets/header/header";
-import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Quest House - Главная страница",
-  description: "Лучшие квесты",
+  title: "Quest House — Погрузись в мир квестов",
+  description:
+    "Выбери квест по душе и открой дверь в захватывающие истории. Удобное бронирование, уникальные сюжеты и незабываемые эмоции — всё в одном месте.",
+  openGraph: {
+    title: "Quest House — Погрузись в мир квестов",
+    description:
+      "Выбери квест по душе и открой дверь в захватывающие истории. Бронирование онлайн, оригинальные локации и яркие впечатления.",
+    url: "https://quest-house.by",
+    type: "website",
+  },
 };
-
-const Footer = dynamic(() => import("../widgets/footer/footer"));
 
 export default function HomeLayout({
   children,

@@ -1,39 +1,30 @@
 import dynamic from "next/dynamic";
+import { fetchHorrors } from "../api/horrors/fetchHorrors";
+import HeroSection from "../pages/HomePage/HeroSection";
 
-const HeroSection = dynamic(
-  () => import("@/app/pages/HomePage/HeroSection/HeroSection")
-);
 const PopularSection = dynamic(
-  () => import("@/app/pages/HomePage/PopularSection/PopularSection")
+  () => import("../pages/HomePage/PopularSection")
 );
-const HandsSection = dynamic(
-  () => import("@/app/pages/HomePage/HandsSection/HandsSection")
-);
-const AboutSection = dynamic(
-  () => import("@/app/pages/HomePage/AboutSection/AboutSection")
-);
+const AboutSection = dynamic(() => import("../pages/HomePage/AboutSection"));
 const ReservationSection = dynamic(
-  () => import("@/app/pages/HomePage/ReservationSection/ReservationSection")
+  () => import("../pages/HomePage/ReservationSection")
 );
 const ReviewsSection = dynamic(
-  () => import("@/app/pages/HomePage/ReviewsSection/ReviewsSection")
+  () => import("../pages/HomePage/ReviewsSection")
 );
-const ContactsSection = dynamic(
-  () => import("@/app/pages/HomePage/ContactsSection/ContactsSection")
-);
+const Contacts = dynamic(() => import("../widgets/contacts/contacts"));
 
-const HomePage = () => {
+export default async function HomePage() {
+  const horrors = await fetchHorrors();
+
   return (
     <main className="main">
       <HeroSection />
       <PopularSection />
-      <HandsSection />
       <AboutSection />
-      <ReservationSection />
+      <ReservationSection horror={horrors} />
       <ReviewsSection />
-      <ContactsSection />
+      <Contacts />
     </main>
   );
-};
-
-export default HomePage;
+}

@@ -1,13 +1,12 @@
-import { Rules } from "@/app/shared/ui/rules/rules";
-import style from "./policy.module.css";
-import { POLICY } from "./policy-data";
 import React from "react";
+import { Rules } from "@/app/widgets/rules/rules";
+import { POLICY } from "./policy-data";
 
 const PolicyPage = () => {
   return (
-    <main>
+    <main className="pb-[32px] md:pb-[100px]">
       <Rules title="Политика обработки пресональных данных">
-        <div className={style.rules__block}>
+        <div className={"text-white text-[20px] flex flex-col gap-[30px]"}>
           <p>
             Настоящая Политика обработки персональных данных (далее — Политика)
             определяет принципы и порядок обработки персональных данных, а также
@@ -22,13 +21,15 @@ const PolicyPage = () => {
           </p>
           {POLICY.map((element) => (
             <div key={element.id}>
-              <h3 className={style.rulest__title}>{element.title}</h3>
+              <h3 className={"pl-[5px] font-[400] text-[20px] uppercase"}>
+                {element.title}
+              </h3>
               {element.rules.map((item) => (
                 <React.Fragment key={item.id}>
                   <p>
                     {item.id}. {item.title}
                   </p>
-                  <ol className={style.rules__list}>
+                  <ol className={"pl-[15px]"}>
                     {item.rulesInner?.map((itemInner, index) => (
                       <li key={index}>{itemInner}</li>
                     ))}

@@ -1,13 +1,12 @@
-import { Rules } from "@/app/shared/ui/rules/rules";
-import { AGREEMENT } from "./agreement-data";
-import style from "./agreement.module.css";
+import { Rules } from "@/app/widgets/rules/rules";
 import React from "react";
+import { AGREEMENT } from "./agreement-data";
 
 const AgreementPage = () => {
   return (
-    <main>
+    <main className="pb-[32px] md:pb-[100px]">
       <Rules title="Пользовательское соглашение">
-        <div className={style.rules__block}>
+        <div className={"text-white text-[20px] flex flex-col gap-[30px]"}>
           <p>
             Индивидуальный предприниматель Жук Юрий Викторович (далее – ИП Жук)
             предлагает физическим лицам (далее – Пользователям) использовать
@@ -26,13 +25,15 @@ const AgreementPage = () => {
           </p>
           {AGREEMENT.map((element) => (
             <div key={element.id}>
-              <h3 className={style.rulest__title}>{element.title}</h3>
+              <h3 className={"pl-[5px] font-[400] text-[20px] uppercase"}>
+                {element.title}
+              </h3>
               {element.rules.map((item) => (
                 <React.Fragment key={item.id}>
                   <p>
                     {item.id}. {item.title}
                   </p>
-                  <ol className={style.rules__list}>
+                  <ol className={"pl-[15px]"}>
                     {item.rulesInner?.map((itemInner, index) => (
                       <li key={index}>{itemInner}</li>
                     ))}

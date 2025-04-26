@@ -1,168 +1,106 @@
 "use client";
 
-import classNames from "classnames";
-import style from "./reservationTable.module.css";
-import { useEffect, useRef, useState } from "react";
+import { IHorrorsPromise } from "@/app/api/horrors/fetchHorrors";
+import { fetchSlots, ISlotsFetch } from "@/app/api/slots/fetchSlots";
+import { ReservationModal } from "@/app/components/reservationModal/reservationModal";
 import Image from "next/image";
-import arrow from "@/app/assets/reservation__arrow.svg";
-import { ReservationModal } from "@/app/features/reservationModal/reservationModal";
-import { ReservationModalLater } from "@/app/features/reservationModalLater/reservationModalLater";
-import { useQuery } from "@tanstack/react-query";
-import { fetchHorrors } from "@/app/api/fetchHorrors/fetchHorrors";
-import { queryClient } from "@/app/api/queryClient";
-import calendar from "@/app/assets/calendar__reservation.svg";
+import React, { useEffect, useRef, useState } from "react";
+import arrow from "@/app/assets/svg/reserv_svg.svg";
 
-interface ISlots {
-  slots: {
-    date: string;
-    slots: {
-      time: string;
-      price: string;
-      is_booked: boolean;
-    }[];
-  }[];
-  name: string;
-  id?: number;
-  isOpen?: boolean;
+interface ReservationProps {
+  quest: IHorrorsPromise;
 }
 
-export interface IModalProps {
-  id: number;
-  date: string;
-  time: string;
-  price: string;
-  name: string;
-}
-
-export const ReservationTable = ({ slots, name, id }: ISlots) => {
-  const [visibleSlots, setVisibleSlots] = useState<number>(7);
-  const [selectedSlot, setSelectedSlot] = useState<IModalProps | undefined>(
-    undefined
-  );
-  const [selectedSlotLater, setSelectedSlotLater] = useState<{
-    name: string;
-    id: number;
-  }>();
+export const ReservationTable = ({ quest }: ReservationProps) => {
+  const [availableSlots, setAvailableSlots] = useState<ISlotsFetch[]>([]);
+  const [showAll, setShowAll] = useState<number>(7);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const dialogLaterRef = useRef<HTMLDialogElement>(null);
-
-  const handleSlotClick = (
-    date: string,
-    time: string,
-    price: string,
-    name: string
-  ) => {
-    setSelectedSlot({ date, time, price, name, id: id ?? 0 });
-  };
-
-  const handleSlotLaterClick = (name: string) => {
-    setSelectedSlotLater({ name, id: id ?? 0 });
-    dialogLaterRef.current?.showModal();
-  };
+  const [selectedSlot, setSelectedSlot] = useState<{
+    time: string;
+    price: number;
+  } | null>(null);
 
   useEffect(() => {
-    if (selectedSlot) {
-      setTimeout(() => {
-        dialogRef.current?.showModal();
-      }, 0);
-    }
-  }, [selectedSlot]);
+    const getSlots = async () => {
+      const data = await fetchSlots(quest.id.toString());
+      setAvailableSlots(data);
+    };
 
-  useEffect(() => {
-    if (selectedSlotLater) {
-      setTimeout(() => {
-        dialogLaterRef.current?.showModal();
-      }, 0);
-    }
-  }, [selectedSlotLater]);
-
-  const showMoreSlots = () => {
-    setVisibleSlots((prev) => prev + 7);
-  };
-
-  const { data: quest__list } = useQuery(
-    {
-      queryFn: () => fetchHorrors(),
-      queryKey: ["quest"],
-    },
-    queryClient
-  );
+    getSlots();
+  }, [quest.id]);
 
   return (
     <>
-      <div className={style.table}>
-        {slots &&
-          slots.slice(0, visibleSlots).map((element) => {
-            const [date, day, weekend] = element.date.split(" ");
-            return (
-              <div key={element.date} className={style.table__row}>
-                <p className={style.table__number}>
-                  {date} {day}
-                  <span className={style.table__number_color}> {weekend}</span>
-                </p>
-                <ul className={style.table__info}>
-                  {element.slots.map((elementInner, index) => (
-                    <li
-                      key={index}
-                      style={{
-                        backgroundColor:
-                          Number(elementInner.price) === 120
-                            ? "#0a8284"
-                            : Number(elementInner.price) === 140
-                            ? "#a40000"
-                            : "#11b3d1",
-                      }}
-                      className={classNames(
-                        style.table__time,
-                        elementInner.is_booked && style.table__time__disable
-                      )}
+      <div className="table w-full pt-[30px] sm:pt-0">
+        <div className="grid grid-cols-1 text-white gap-y-[22px]">
+          {availableSlots.slice(0, showAll).map((element) => (
+            <div
+              key={element.date}
+              className="flex flex-col sm:flex-row gap-[31px]"
+            >
+              <span className="sm:max-w-[277px] w-full md:shrink-0 border-t-1 border-solid md:text-[31px] pl-[18px] md:min-h-[65px]">
+                {element.date}
+              </span>
+              <div className="flex flex-wrap items-center gap-[7px]">
+                {element.slots.map((item) => {
+                  let bgColor = "";
+
+                  switch (item.price) {
+                    case 110:
+                      bgColor = "bg-[#11B3D1]";
+                      break;
+                    case 120:
+                      bgColor = "bg-[#0A8284]";
+                      break;
+                    case 140:
+                      bgColor = "bg-(--red)";
+                      break;
+                    default:
+                      bgColor = "bg-[#393939]";
+                  }
+
+                  return (
+                    <button
+                      disabled={item.is_booked}
+                      key={item.time}
                       onClick={() => {
-                        handleSlotClick(
-                          element.date,
-                          elementInner.time,
-                          elementInner.price,
-                          name
-                        );
+                        setSelectedSlot({ time: item.time, price: item.price });
+                        dialogRef.current?.showModal();
                       }}
+                      className={`${bgColor} p-2 text-white rounded cursor-pointer md:text-[31px]`}
                     >
-                      {elementInner.time}
-                    </li>
-                  ))}
-                </ul>
+                      {item.time}
+                    </button>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ))}
+        </div>
+        {showAll < 21 && (
+          <div className="flex items-end bg-[url(assets/webp/btn_big.png)] bg-no-repeat bg-center bg-size-[90%_90%] min-h-[60px] sm:bg-size-[98%_90%] sm:min-h-[98px]">
+            <button
+              onClick={() => setShowAll(showAll + 7)}
+              className="mx-auto px-[9px] text-[12px] py-[6px] cursor-pointer flex gap-[8px] justify-center items-center bg-(--red) sm:py-4 sm:px-6 sm:text-[18px] text-white rounded-lg"
+            >
+              <span>Показать больше дней</span>
+              <Image
+                className="sm:w-[10px] sm:h-[7px]"
+                src={arrow}
+                alt="стрелка"
+              />
+            </button>
+          </div>
+        )}
       </div>
-      {visibleSlots < 21 ? (
-        <div className={style.reservation__more__block}>
-          <button onClick={showMoreSlots} className={style.reservation__button}>
-            Показать больше дней
-            <Image src={arrow} alt="arrow" />
-          </button>
-        </div>
-      ) : (
-        <div className={style.reservation__more__block}>
-          <button
-            onClick={() => {
-              handleSlotLaterClick(name);
-            }}
-            className={style.reservation__button}
-          >
-            <Image width={16} height={16} src={calendar} alt="calendar" />
-            Оставить заявку на более позднюю дату
-          </button>
-        </div>
-      )}
       <ReservationModal
-        rezerv={selectedSlot!}
-        refDialog={dialogRef}
+        dialogRef={dialogRef}
         onClose={() => dialogRef.current?.close()}
-      />
-      <ReservationModalLater
-        questList={quest__list}
-        refDialog={dialogLaterRef}
-        onClose={() => dialogLaterRef.current?.close()}
-        rezerv={selectedSlotLater}
+        questDetails={{
+          ...quest,
+          price: selectedSlot ? selectedSlot.price : 0,
+          time: selectedSlot ? selectedSlot?.time : "110",
+        }}
       />
     </>
   );

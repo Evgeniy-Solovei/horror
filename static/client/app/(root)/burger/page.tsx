@@ -1,5 +1,13 @@
+"use client";
+
+import BurgerModal from "@/app/@modal/(.)burger/page";
+
 const BurgerPage = () => {
-  return <div></div>;
+  return (
+    <>
+      <BurgerModal />
+    </>
+  );
 };
 
 export default BurgerPage;
