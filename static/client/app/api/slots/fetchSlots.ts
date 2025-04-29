@@ -4,6 +4,7 @@ import { api } from "../api";
 export interface ISlotsFetch {
   date: string;
   slots: {
+    slot: number;
     time: string;
     price: number;
     is_booked: boolean;

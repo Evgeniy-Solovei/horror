@@ -11,6 +11,14 @@ interface ReservationProps {
   quest: IHorrorsPromise;
 }
 
+const parseDateString = (str: string) => {
+  const [day, month, weekday] = str.trim().split(" ");
+  return {
+    date: `${day} ${month}`,
+    weekday,
+  };
+};
+
 export const ReservationTable = ({ quest }: ReservationProps) => {
   const [availableSlots, setAvailableSlots] = useState<ISlotsFetch[]>([]);
   const [showAll, setShowAll] = useState<number>(7);
@@ -18,6 +26,7 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
   const [selectedSlot, setSelectedSlot] = useState<{
     time: string;
     price: number;
+    slot: number;
   } | null>(null);
 
   useEffect(() => {
@@ -39,10 +48,11 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
               className="flex flex-col sm:flex-row gap-[31px]"
             >
               <span className="sm:max-w-[277px] w-full md:shrink-0 border-t-1 border-solid md:text-[31px] pl-[18px] md:min-h-[65px]">
-                {element.date}
+                {parseDateString(element.date).date}{" "}
+                {parseDateString(element.date).weekday}
               </span>
               <div className="flex flex-wrap items-center gap-[7px]">
-                {element.slots.map((item) => {
+                {element.slots.map((item, index) => {
                   let bgColor = "";
 
                   switch (item.price) {
@@ -64,10 +74,17 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
                       disabled={item.is_booked}
                       key={item.time}
                       onClick={() => {
-                        setSelectedSlot({ time: item.time, price: item.price });
+                        setSelectedSlot({
+                          time: item.time,
+                          price: item.price,
+                          slot: index,
+                        });
                         dialogRef.current?.showModal();
                       }}
-                      className={`${bgColor} p-2 text-white rounded cursor-pointer md:text-[31px]`}
+                      className={`${bgColor} p-2 text-white rounded cursor-pointer md:text-[31px] ${
+                        item.is_booked &&
+                        "bg-[#393939!important] text-[#5A5A5A!important]"
+                      }`}
                     >
                       {item.time}
                     </button>
@@ -100,6 +117,7 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
           ...quest,
           price: selectedSlot ? selectedSlot.price : 0,
           time: selectedSlot ? selectedSlot?.time : "110",
+          slot: selectedSlot ? selectedSlot?.slot : 0,
         }}
       />
     </>

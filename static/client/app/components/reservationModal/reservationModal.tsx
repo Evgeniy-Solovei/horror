@@ -9,10 +9,15 @@ import clock from "@/app/assets/svg/clock_popular.svg";
 import calendar from "@/app/assets/svg/calendar_reservation.svg";
 import money from "@/app/assets/svg/money.svg";
 import { Checkbox } from "@/app/ui/checkbox/checkbox";
+import { useMutation } from "@tanstack/react-query";
+import { fetchReserv } from "@/app/api/reserv/fetchReserv";
+import { queryClient } from "@/app/api/queryClient";
+import { useForm } from "react-hook-form";
 
 interface ReservationModalPromise extends IHorrorsPromise {
   price: number;
   time: string;
+  slot: number;
 }
 
 interface IModal {
@@ -40,6 +45,47 @@ export const ReservationModal = ({
   const calculatePrice = () => {
     return pricingPerPerson[numberOfPeople as keyof typeof pricingPerPerson];
   };
+
+  const reservMutate = useMutation(
+    {
+      mutationFn: ({
+        horror,
+        data,
+        slot,
+        phone,
+        first_name,
+        last_name,
+        certificate,
+        comment,
+        price,
+      }: {
+        horror: number;
+        data: string;
+        slot: number;
+        phone: string;
+        first_name: string;
+        last_name: string;
+        certificate?: boolean;
+        comment?: string;
+        price: number;
+      }) =>
+        fetchReserv({
+          horror,
+          data,
+          slot,
+          phone,
+          first_name,
+          last_name,
+          certificate,
+          comment,
+          price,
+        }),
+      mutationKey: ["reserv"],
+    },
+    queryClient
+  );
+
+  const { register, handleSubmit } = useForm();
 
   return (
     <Dialog
@@ -92,13 +138,29 @@ export const ReservationModal = ({
             </li>
           </ul>
         </div>
-        <form className="flex flex-col w-full py-[50px] px-[30px] lg:py-[87px] lg:px-[117px]">
+        <form
+          onSubmit={handleSubmit((data) => {
+            reservMutate.mutate({
+              horror: questDetails.id,
+              data: "2025-05-01",
+              phone: data.phone,
+              slot: questDetails.slot,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              certificate: useCertificate,
+              comment: data.comment || "",
+              price: calculatePrice(),
+            });
+          })}
+          className="flex flex-col w-full py-[50px] px-[30px] lg:py-[87px] lg:px-[117px]"
+        >
           <div className="grid grid-cols-1 gap-y-[30px] lg:gap-[52px] lg:grid-cols-2">
             <FormField label="Имя">
               <input
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
                 placeholder="Имя"
+                {...register("first_name")}
               />
             </FormField>
             <FormField label="Фамилия">
@@ -106,6 +168,7 @@ export const ReservationModal = ({
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
                 placeholder="Фамилия"
+                {...register("last_name")}
               />
             </FormField>
             <FormField label="Ваш телефон">
@@ -113,6 +176,7 @@ export const ReservationModal = ({
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="tel"
                 placeholder="Ваш телефон"
+                {...register("phone")}
               />
             </FormField>
             <FormField label="Количество участников">
@@ -131,6 +195,7 @@ export const ReservationModal = ({
                 max={5}
                 step={1}
                 defaultValue={1}
+                {...register("people")}
                 onChange={(e) => setNumberOfPeople(Number(e.target.value))}
               />
             </FormField>
@@ -138,6 +203,7 @@ export const ReservationModal = ({
           <Checkbox
             className="my-6"
             checked={useCertificate}
+            {...register("certificate")}
             onChange={(e) => setUseCertificate(e.target.checked)}
             label="Использовать сертификат"
           />
@@ -145,6 +211,7 @@ export const ReservationModal = ({
             <textarea
               className="pb-[10px] resize-none transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
               placeholder="Введите ваш комментарий"
+              {...register("comment")}
             ></textarea>
           </FormField>
           <Checkbox className="mt-4 mb-2" label="Все игроки старше 14 лет" />

@@ -23,7 +23,7 @@ export const ReservationModalLater = ({
   return (
     <Dialog ref={dialogRef} onClose={onClose}>
       <div className="flex flex-col sm:flex-row h-full text-white">
-        <div className="bg-[#82D7DB69] h-full overflow-hidden max-w-[567px] w-full flex flex-col pt-[53px] px-[24px] md:pt-[60px]">
+        <div className="bg-[#82D7DB69] h-full min-h-[230px] overflow-hidden max-w-[567px] w-full flex flex-col pt-[53px] px-[24px] md:pt-[60px]">
           <div className="flex flex-col items-center mb-auto">
             <span className="mb-[46px] text-[24px] sm:text-[28px] md:text-[36px] font-bold">
               Бронирование

@@ -59,7 +59,7 @@ export default function ReservationSection({ horror }: IReservationHorror) {
               {horror ? (
                 <button
                   onClick={() => dialogRef.current?.showModal()}
-                  className="gap-2 text-[12px] shrink-0 px-[9px] sm:text-[18px] py-[6px] flex justify-center items-center bg-(--red) sm:py-4 sm:px-6 text-white rounded-lg cursor-pointer"
+                  className="hidden gap-2 text-[12px] shrink-0 px-[9px] sm:text-[18px] py-[6px] sm:flex justify-center items-center bg-(--red) sm:py-4 sm:px-6 text-white rounded-lg cursor-pointer"
                 >
                   <Image width={24} height={24} src={calendar} alt={"photo"} />
                   Оставить заявку на более позднюю дату
@@ -126,7 +126,7 @@ export default function ReservationSection({ horror }: IReservationHorror) {
                   selectedQuest?.id === element.id
                     ? "shadow-[0px_2.43px_12.13px_0px_#FFFFFF33] scale-[1.08]"
                     : ""
-                } ${selectedQuest && index === 0 ? "ml-[20px]" : ""}`}
+                } ${selectedQuest && index === 0 ? "sm:ml-[20px]" : ""}`}
               >
                 <Image
                   className="absolute w-full h-full rounded-2xl aspect-[16/9] object-cover"
