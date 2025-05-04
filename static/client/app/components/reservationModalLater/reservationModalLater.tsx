@@ -6,6 +6,12 @@ import { IHorrorsPromise } from "@/app/api/horrors/fetchHorrors";
 import { FormField } from "@/app/ui/formField/formField";
 import { Checkbox } from "@/app/ui/checkbox/checkbox";
 import { MoreQuests } from "@/app/widgets/moreQuests/moreQuests";
+import { fetchReserv } from "@/app/api/reserv/fetchReserv";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/app/api/queryClient";
+import { useForm } from "react-hook-form";
+import { ReservLaterScheme, ReservLaterType } from "@/app/types/reservLater";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IModal {
   dialogRef: RefObject<HTMLDialogElement | null>;
@@ -13,15 +19,78 @@ interface IModal {
   questDetails: IHorrorsPromise;
 }
 
+const pricingPerPerson = {
+  1: 110,
+  2: 120,
+  3: 130,
+  4: 140,
+  5: 150,
+} as const;
+
 export const ReservationModalLater = ({
   dialogRef,
   onClose,
   questDetails,
 }: IModal) => {
+  const [numberOfPeople, setNumberOfPeople] = useState(1);
   const [useCertificate, setUseCertificate] = useState(false);
 
+  const calculatePrice = () => {
+    return pricingPerPerson[numberOfPeople as keyof typeof pricingPerPerson];
+  };
+
+  const reservMutate = useMutation(
+    {
+      mutationFn: ({
+        horror,
+        data,
+        slot,
+        phone,
+        first_name,
+        last_name,
+        certificate,
+        comment,
+        price,
+      }: {
+        horror: number;
+        data: string;
+        slot: number;
+        phone: string;
+        first_name: string;
+        last_name: string;
+        certificate?: boolean;
+        comment?: string;
+        price: number;
+      }) =>
+        fetchReserv({
+          horror,
+          data,
+          slot,
+          phone,
+          first_name,
+          last_name,
+          certificate,
+          comment,
+          price,
+        }),
+      mutationKey: ["reserv"],
+      onSuccess() {
+        queryClient.invalidateQueries({ queryKey: ["slots"] });
+        reset();
+      },
+    },
+    queryClient
+  );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ReservLaterType>({ resolver: zodResolver(ReservLaterScheme) });
+
   return (
-    <Dialog ref={dialogRef} onClose={onClose}>
+    <Dialog className="h-[90%!important]" ref={dialogRef} onClose={onClose}>
       <div className="flex flex-col sm:flex-row h-full text-white">
         <div className="bg-[#82D7DB69] h-full min-h-[230px] overflow-hidden max-w-[567px] w-full flex flex-col pt-[53px] px-[24px] md:pt-[60px]">
           <div className="flex flex-col items-center mb-auto">
@@ -37,24 +106,57 @@ export const ReservationModalLater = ({
             <MoreQuests />
           </div>
         </div>
-        <form className="flex flex-col w-full py-[50px] px-[30px] lg:py-[87px] lg:px-[117px]">
-          <div className="grid grid-cols-1 gap-y-[30px] lg:gap-[52px] lg:grid-cols-2">
-            <FormField label="Имя">
+        <form
+          onSubmit={handleSubmit((data) => {
+            reservMutate.mutate({
+              horror: questDetails.id,
+              data: "123",
+              phone: data.phone,
+              slot: 1,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              certificate: useCertificate,
+              comment: data.comment || "",
+              price: calculatePrice(),
+            });
+          })}
+          className="flex flex-col w-full py-[50px] px-[30px] lg:py-[87px] lg:px-[117px]"
+        >
+          <div className="grid grid-cols-1 gap-y-[30px] lg:gap-x-[52px] lg:gap-y-[30px] lg:grid-cols-2">
+            <FormField errors={errors.first_name?.message} label="Имя">
               <input
+                {...register("first_name")}
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
                 placeholder="Имя"
               />
             </FormField>
-            <FormField label="Фамилия">
+            <FormField errors={errors.last_name?.message} label="Фамилия">
               <input
+                {...register("last_name")}
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
                 placeholder="Фамилия"
               />
             </FormField>
-            <FormField label="Ваш телефон">
+            <FormField label="Дата">
               <input
+                {...register("first_name")}
+                className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
+                type="date"
+                placeholder="Фамилия"
+              />
+            </FormField>
+            <FormField label="Время">
+              <input
+                className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
+                type="time"
+                placeholder="Фамилия"
+              />
+            </FormField>
+            <FormField errors={errors.phone?.message} label="Ваш телефон">
+              <input
+                {...register("phone")}
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="tel"
                 placeholder="Ваш телефон"
@@ -69,6 +171,7 @@ export const ReservationModalLater = ({
                 <span className="label left-[97%] absolute">5</span>
               </div>
               <input
+                {...register("people")}
                 className="custom-range"
                 type="range"
                 placeholder="Ваш телефон"
@@ -76,6 +179,7 @@ export const ReservationModalLater = ({
                 max={5}
                 step={1}
                 defaultValue={1}
+                onChange={(e) => setNumberOfPeople(Number(e.target.value))}
               />
             </FormField>
           </div>

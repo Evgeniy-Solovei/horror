@@ -6,6 +6,10 @@ import { ReservationModal } from "@/app/components/reservationModal/reservationM
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import arrow from "@/app/assets/svg/reserv_svg.svg";
+import { useQuery } from "@tanstack/react-query";
+import { queryClient } from "@/app/api/queryClient";
+import calendar from "@/app/assets/svg/calendar_reservation.svg";
+import { ReservationModalLater } from "@/app/components/reservationModalLater/reservationModalLater";
 
 interface ReservationProps {
   quest: IHorrorsPromise;
@@ -23,20 +27,26 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
   const [availableSlots, setAvailableSlots] = useState<ISlotsFetch[]>([]);
   const [showAll, setShowAll] = useState<number>(7);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const dialogLaterRef = useRef<HTMLDialogElement>(null);
   const [selectedSlot, setSelectedSlot] = useState<{
     time: string;
     price: number;
     slot: number;
+    date_front: string;
   } | null>(null);
 
+  const { data: slots } = useQuery(
+    {
+      queryFn: () => fetchSlots(quest.id.toString()),
+      queryKey: ["slots"],
+    },
+    queryClient
+  );
   useEffect(() => {
-    const getSlots = async () => {
-      const data = await fetchSlots(quest.id.toString());
-      setAvailableSlots(data);
-    };
-
-    getSlots();
-  }, [quest.id]);
+    if (slots) {
+      setAvailableSlots(slots);
+    }
+  }, [slots]);
 
   return (
     <>
@@ -78,6 +88,7 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
                           time: item.time,
                           price: item.price,
                           slot: index,
+                          date_front: element.date_front,
                         });
                         dialogRef.current?.showModal();
                       }}
@@ -94,7 +105,7 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
             </div>
           ))}
         </div>
-        {showAll < 21 && (
+        {showAll < 21 ? (
           <div className="flex items-end bg-[url(assets/webp/btn_big.png)] bg-no-repeat bg-center bg-size-[90%_90%] min-h-[60px] sm:bg-size-[98%_90%] sm:min-h-[98px]">
             <button
               onClick={() => setShowAll(showAll + 7)}
@@ -108,6 +119,20 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
               />
             </button>
           </div>
+        ) : (
+          <div className="flex items-end bg-[url(assets/webp/btn_big.png)] bg-no-repeat bg-center bg-size-[90%_90%] min-h-[60px] sm:bg-size-[98%_90%] sm:min-h-[98px]">
+            <button
+              onClick={() => dialogLaterRef.current?.showModal()}
+              className="mx-auto px-[9px] text-[12px] py-[6px] cursor-pointer flex gap-[8px] justify-center items-center bg-(--red) sm:py-4 sm:px-6 sm:text-[18px] text-white rounded-lg"
+            >
+              <Image
+                className="w-[15px] h-[15px] sm:w-auto sm:h-auto"
+                src={calendar}
+                alt="календарь"
+              />
+              <span>Оставить заявку на более позднюю дату</span>
+            </button>
+          </div>
         )}
       </div>
       <ReservationModal
@@ -118,7 +143,13 @@ export const ReservationTable = ({ quest }: ReservationProps) => {
           price: selectedSlot ? selectedSlot.price : 0,
           time: selectedSlot ? selectedSlot?.time : "110",
           slot: selectedSlot ? selectedSlot?.slot : 0,
+          date_front: selectedSlot ? selectedSlot.date_front : "",
         }}
+      />
+      <ReservationModalLater
+        dialogRef={dialogLaterRef}
+        onClose={() => dialogLaterRef.current?.close()}
+        questDetails={{ ...quest }}
       />
     </>
   );

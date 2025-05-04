@@ -9,6 +9,7 @@ interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   checked?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  error?: string;
 }
 
 export const Checkbox: React.FC<ICheckboxProps> = ({
@@ -16,6 +17,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
   checked,
   onChange,
   className,
+  error,
   ...props
 }) => {
   return (
@@ -30,7 +32,12 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
         {...props}
         type="checkbox"
       />
-      <span>{label}</span>
+      <span className={"text-white"}>{label}</span>
+      {error && (
+        <span className="text-red-600 ml-auto shrink-0 text-[14px] block mt-1 font-semibold">
+          {error}
+        </span>
+      )}
     </label>
   );
 };

@@ -3,6 +3,7 @@ import { api } from "../api";
 
 export interface ISlotsFetch {
   date: string;
+  date_front: string;
   slots: {
     slot: number;
     time: string;

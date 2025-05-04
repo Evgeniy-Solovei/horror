@@ -13,11 +13,14 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchReserv } from "@/app/api/reserv/fetchReserv";
 import { queryClient } from "@/app/api/queryClient";
 import { useForm } from "react-hook-form";
+import { ReservScheme, ReservType } from "@/app/types/reserv";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface ReservationModalPromise extends IHorrorsPromise {
   price: number;
   time: string;
   slot: number;
+  date_front: string;
 }
 
 interface IModal {
@@ -40,7 +43,9 @@ export const ReservationModal = ({
   questDetails,
 }: IModal) => {
   const [numberOfPeople, setNumberOfPeople] = useState(1);
-  const [useCertificate, setUseCertificate] = useState(false);
+  const [useCertificate, setUseCertificate] = useState<boolean>(false);
+  const [useYear, setUseYear] = useState<boolean>(false);
+  const [useAgreement, setUseAgreement] = useState<boolean>(false);
 
   const calculatePrice = () => {
     return pricingPerPerson[numberOfPeople as keyof typeof pricingPerPerson];
@@ -81,11 +86,22 @@ export const ReservationModal = ({
           price,
         }),
       mutationKey: ["reserv"],
+      onSuccess() {
+        queryClient.invalidateQueries({ queryKey: ["slots"] });
+        reset();
+      },
     },
     queryClient
   );
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ReservType>({
+    resolver: zodResolver(ReservScheme),
+  });
 
   return (
     <Dialog
@@ -142,7 +158,7 @@ export const ReservationModal = ({
           onSubmit={handleSubmit((data) => {
             reservMutate.mutate({
               horror: questDetails.id,
-              data: "2025-05-01",
+              data: questDetails.date_front,
               phone: data.phone,
               slot: questDetails.slot,
               first_name: data.first_name,
@@ -154,8 +170,8 @@ export const ReservationModal = ({
           })}
           className="flex flex-col w-full py-[50px] px-[30px] lg:py-[87px] lg:px-[117px]"
         >
-          <div className="grid grid-cols-1 gap-y-[30px] lg:gap-[52px] lg:grid-cols-2">
-            <FormField label="Имя">
+          <div className="grid grid-cols-1 gap-y-[30px] lg:gap-[42px] lg:gap-y-[30px] lg:grid-cols-2">
+            <FormField errors={errors.first_name?.message} label="Имя">
               <input
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
@@ -163,7 +179,7 @@ export const ReservationModal = ({
                 {...register("first_name")}
               />
             </FormField>
-            <FormField label="Фамилия">
+            <FormField errors={errors.last_name?.message} label="Фамилия">
               <input
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="text"
@@ -171,7 +187,7 @@ export const ReservationModal = ({
                 {...register("last_name")}
               />
             </FormField>
-            <FormField label="Ваш телефон">
+            <FormField errors={errors.phone?.message} label="Ваш телефон">
               <input
                 className="pb-[10px] transition ease-in-out outline-none border-b-1 border-solid border-[#8D8D8D] focus:border-[#fff]"
                 type="tel"
@@ -214,8 +230,22 @@ export const ReservationModal = ({
               {...register("comment")}
             ></textarea>
           </FormField>
-          <Checkbox className="mt-4 mb-2" label="Все игроки старше 14 лет" />
-          <Checkbox label="Я согласен с Политикой обработки персональных данных и пользовательским соглашением" />
+
+          <Checkbox
+            error={errors.year?.message}
+            {...register("year")}
+            checked={useYear}
+            onChange={(e) => setUseYear(e.target.checked)}
+            className="mt-4 mb-2"
+            label="Все игроки старше 14 лет"
+          />
+          <Checkbox
+            error={errors.agreement?.message}
+            {...register("agreement")}
+            checked={useAgreement}
+            onChange={(e) => setUseAgreement(e.target.checked)}
+            label="Я согласен с Политикой обработки персональных данных и пользовательским соглашением"
+          />
           <div className="min-h-[60px] sm:min-h-[98px] bg-[url(assets/webp/btn_bg.png)] bg-no-repeat bg-center bg-size-[100%_60%] sm:bg-size-[100%_70%] flex items-end justify-center">
             <button
               className="text-white max-w-[181px] py-[6px] px-[12px] text-[14px] sm:text-[18px] sm:py-[16px] sm:px-[24px] cursor-pointer bg-(--red) rounded-lg"

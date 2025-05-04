@@ -48,32 +48,34 @@ export default async function HorrorsPage({
   const horrors = await fetchOneHorror(id);
 
   return (
-    <main className="main">
-      <HeroHorrorSection
-        complexity={horrors.complexity}
-        count_players={horrors.count_players}
-        description={horrors.description}
-        fear={horrors.fear}
-        genre={horrors.genre}
-        id={horrors.id}
-        is_active={horrors.is_active}
-        location={horrors.location}
-        name={horrors.name}
-        novelty={horrors.novelty}
-        photos={horrors.photos}
-        photos_back_card={horrors.photos_back_card}
-        photos_blur={horrors.photos_blur}
-        rating={horrors.rating}
-        registration_date={horrors.registration_date}
-        travel_time={horrors.travel_time}
-      />
-      <Awards id={horrors.id} />
-      <RulesSection />
-      <ReservationHorrorSection horror={horrors} />
-      <div className="block md:hidden">
-        <ReviewsSection />
-      </div>
-      <Contacts location={horrors.location} />
-    </main>
+    <>
+      <main className="main">
+        <HeroHorrorSection
+          complexity={horrors.complexity}
+          count_players={horrors.count_players}
+          description={horrors.description}
+          fear={horrors.fear}
+          genre={horrors.genre}
+          id={horrors.id}
+          is_active={horrors.is_active}
+          location={horrors.location}
+          name={horrors.name}
+          novelty={horrors.novelty}
+          photos={horrors.photos}
+          photos_back_card={horrors.photos_back_card}
+          photos_blur={horrors.photos_blur}
+          rating={horrors.rating}
+          registration_date={horrors.registration_date}
+          travel_time={horrors.travel_time}
+        />
+        <Awards id={horrors.id} />
+        <RulesSection />
+        <ReservationHorrorSection horror={horrors} />
+        <div className="block md:hidden">
+          <ReviewsSection />
+        </div>
+        <Contacts location={horrors.location} />
+      </main>
+    </>
   );
 }

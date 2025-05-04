@@ -1,4 +1,3 @@
-// ReviewsModal.tsx
 "use client";
 
 import Dialog from "@/app/ui/dialogUI/dialogUI";
@@ -24,7 +23,12 @@ export const ReviewsModal = ({ dialogRef, onClose }: IModal) => {
   }, []);
 
   return (
-    <Dialog classNameBTN="sticky" ref={dialogRef} onClose={onClose}>
+    <Dialog
+      classNameBTN="sticky"
+      classNameContent="h-[auto!important]"
+      ref={dialogRef}
+      onClose={onClose}
+    >
       <div className="px-[53px] py-[56px] md:px-[120px] overflow-y-auto gap-[20px] grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {reviews.map((element) => (
           <ReviewUI

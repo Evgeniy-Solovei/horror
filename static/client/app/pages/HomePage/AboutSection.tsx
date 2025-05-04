@@ -6,7 +6,7 @@ export default function AboutSection() {
   return (
     <section className="about relative">
       <Image
-        className="block sticky bottom-11"
+        className="block sticky bottom-11 mx-auto"
         src={hands}
         alt="поскорее запишись на квест"
       />
