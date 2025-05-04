@@ -54,7 +54,7 @@ class AvailableSlotsView(APIView):
                 slots_for_date.append({"time": slot_time,"price": self.get_slot_price(slot_time, date),
                                        "is_booked": slot.id in booked_slots})
             # Добавляем дату и слоты в результат
-            result.append({"date": self.format_date(date), "slots": slots_for_date})
+            result.append({"date": self.format_date(date),"date_front": date.isoformat(), "slots": slots_for_date})
         return Response(result)
 
     def get_slot_price(self, slot_time, booking_date):

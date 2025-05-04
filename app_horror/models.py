@@ -56,7 +56,7 @@ class BlurPhoto(models.Model):
 
 
 class TimeSlot(models.Model):
-    "Модель временных слотов для бронирования квестов"
+    """Модель временных слотов для бронирования квестов"""
     time = models.TimeField(unique=True)
 
     def __str__(self):
@@ -67,7 +67,7 @@ class Booking(models.Model):
     """Модель бронирования"""
     horror = models.ForeignKey(Horror, on_delete=models.CASCADE, related_name="bookings", verbose_name='Квест для брони')
     data = models.DateField(null=True, blank=True, verbose_name="Дата бронирования ")
-    slot = models.OneToOneField(TimeSlot, blank=True, null=True, on_delete=models.CASCADE, related_name="booking",
+    slot = models.ForeignKey(TimeSlot, blank=True, null=True, on_delete=models.CASCADE, related_name="booking",
                                 verbose_name='Дата-время брони')
     first_name = models.CharField(max_length=100, verbose_name='Имя клиента')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия клиента')
@@ -76,6 +76,9 @@ class Booking(models.Model):
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий клиента')
     price = models.IntegerField(blank=True, null=True, verbose_name='Цена за квест')
 
+    class Meta:
+        """Один слот в день — только один раз"""
+        unique_together = ('data', 'slot')
     def __str__(self):
         return f"{self.horror.name} - {self.first_name} {self.last_name}"
 
