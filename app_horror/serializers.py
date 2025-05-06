@@ -1,5 +1,6 @@
 from adrf.fields import SerializerMethodField
 from adrf.serializers import ModelSerializer, Serializer
+from rest_framework import serializers
 from app_horror.models import Horror, TimeSlot, Booking, Photo, BackgroundPhotoCard, BlurPhoto
 
 
@@ -50,14 +51,13 @@ class HorrorSerializer(ModelSerializer):
         return BlurPhotoSerializer(blur_photos, many=True).data  # Сериализуем фотографии блюра
 
 
-class BookingSerializer(ModelSerializer):
+class BookingSerializer(serializers.ModelSerializer):
+    data = serializers.DateField(required=False, allow_null=True)
+    slot = serializers.PrimaryKeyRelatedField(queryset=TimeSlot.objects.all(), required=False, allow_null=True)
+
     class Meta:
         model = Booking
         fields = "__all__"
-        extra_kwargs = {
-            'data': {'required': False},
-            'slot': {'required': False},
-        }
 
 
 class TimeSlotSerializer(ModelSerializer):
