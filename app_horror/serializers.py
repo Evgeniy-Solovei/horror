@@ -52,8 +52,13 @@ class HorrorSerializer(ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    data = serializers.DateField(required=False, allow_null=True)
-    slot = serializers.PrimaryKeyRelatedField(queryset=TimeSlot.objects.all(), required=False, allow_null=True)
+    data = serializers.DateField(required=False, allow_null=True, default=None)
+    slot = serializers.PrimaryKeyRelatedField(
+        queryset=TimeSlot.objects.all(),
+        required=False,
+        allow_null=True,
+        default=None
+    )
 
     class Meta:
         model = Booking
