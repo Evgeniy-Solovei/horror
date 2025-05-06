@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from app_horror.models import TimeSlot, Booking, Horror
 from app_horror.serializers import HorrorSerializer, BookingSerializer, TimeSlotSerializer
+from rest_framework.permissions import AllowAny
 
 
 class HorrorListView(APIView):
@@ -82,7 +83,7 @@ class AvailableSlotsView(APIView):
 
 class BookingCreateView(APIView):
     """Представление для создания брони"""
-
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         # Получаем данные из тела запроса
         serializer = BookingSerializer(data=request.data)
