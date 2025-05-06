@@ -85,6 +85,7 @@ class BookingCreateView(APIView):
     """Представление для создания брони"""
     permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
+        print("Request data:", request.data)
         # Получаем данные из тела запроса
         serializer = BookingSerializer(data=request.data)
         # Проверяем, что данные валидны
@@ -92,6 +93,7 @@ class BookingCreateView(APIView):
             # Создаем запись брони
             booking = serializer.save()
             return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
+        print("Serializer errors:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
