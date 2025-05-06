@@ -54,6 +54,10 @@ class BookingSerializer(ModelSerializer):
     class Meta:
         model = Booking
         fields = "__all__"
+        extra_kwargs = {
+            'data': {'required': False},
+            'slot': {'required': False},
+        }
 
 
 class TimeSlotSerializer(ModelSerializer):
